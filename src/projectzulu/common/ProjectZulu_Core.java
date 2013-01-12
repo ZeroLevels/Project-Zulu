@@ -88,7 +88,7 @@ public class ProjectZulu_Core{
 	public static File modConfigDirectoryFile;
 
 	
-	@SidedProxy(clientSide = "projectzulu.client.ClientProxyProjectZulu", serverSide = "projectzulu.common.CommonProxyProjectZulu")
+	@SidedProxy(clientSide = "projectzulu.common.ClientProxyProjectZulu", serverSide = "projectzulu.common.CommonProxyProjectZulu")
 	public static CommonProxyProjectZulu proxy;
 
 	@PreInit
