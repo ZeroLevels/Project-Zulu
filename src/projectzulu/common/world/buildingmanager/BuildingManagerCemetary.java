@@ -9,11 +9,11 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import projectzulu.common.api.ItemBlockList;
-import projectzulu.common.world.CellType;
-import projectzulu.common.world.MazeCell;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
 import projectzulu.common.world.architects.Architect;
 import projectzulu.common.world.architects.ArchitectCemetary;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.CellType;
+import projectzulu.common.world.cell.MazeCell;
 
 public class BuildingManagerCemetary extends BuildingManager{
 	
@@ -22,7 +22,7 @@ public class BuildingManagerCemetary extends BuildingManager{
 	}
 	
 	@Override
-	Architect getArchitect() {
+	protected Architect getDefaultArchitect() {
 		return new ArchitectCemetary();
 	}
 	
@@ -93,7 +93,7 @@ public class BuildingManagerCemetary extends BuildingManager{
 		int cellSize = cellList[xIndex][zIndex].getSize();
 		
 		/* Randomise the Architects State for this cell, Used to Determine what should be built */
-		architect.randomiseState(random);
+		getArchitect().randomiseState(random);
 		
 		for (int cellIndex = 0; cellIndex < (cellSize*cellSize); cellIndex++){
 			/* Get Important Properties From Cell */
@@ -104,7 +104,6 @@ public class BuildingManagerCemetary extends BuildingManager{
 					(int)cellList[xIndex][zIndex].getLocation(cellIndex).zCoord);
 			
 			for (CellType cellType : cellSubType){
-
 				switch (cellType){
 				case NorthWall:
 					/* Only Perform Action on Outer Portion
@@ -211,7 +210,7 @@ public class BuildingManagerCemetary extends BuildingManager{
 				case InnerWall:
 					/* Place Walls Vertically Until Size of Floor */
 					for (int j = 0; j < floorHeight; j++) {
-						HandleBlockPlacement(architect.getCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random),
+						HandleBlockPlacement(getArchitect().getCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random),
 								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
 					}
 					break;
@@ -220,7 +219,7 @@ public class BuildingManagerCemetary extends BuildingManager{
 					break;
 				case RandomUnCarved:
 					for (int j = 0; j < floorHeight; j++) {
-						HandleBlockPlacement(architect.getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random), 
+						HandleBlockPlacement(getArchitect().getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random), 
 								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
 					}
 					break;

@@ -1,9 +1,10 @@
-package projectzulu.common.world;
+package projectzulu.common.world.cell;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+
 
 import net.minecraft.util.Vec3;
 

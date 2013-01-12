@@ -14,6 +14,7 @@ import net.minecraftforge.common.DungeonHooks;
 import projectzulu.common.core.DefaultProps;
 import projectzulu.common.core.ProjectZuluLog;
 import projectzulu.common.mobs.EntityMimic;
+import projectzulu.common.world.cell.MazeCell;
 import cpw.mods.fml.common.Loader;
 
 public class WorldGenPyramid extends WorldGenerator

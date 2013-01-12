@@ -9,6 +9,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.Configuration;
 import projectzulu.common.api.ItemBlockList;
 import projectzulu.common.core.ProjectZuluLog;
+import projectzulu.common.world.buildingmanager.BuildingManagerCathedral;
 import projectzulu.common.world.buildingmanager.BuildingManagerCemetary;
 import projectzulu.common.world.buildingmanager.BuildingManagerLabyrinth;
 
@@ -140,6 +141,24 @@ public enum StructureManager {
 		@Override
 		public boolean generate(World world, int Xcoord, int Ycoord, int Zcoord, Random random){
 			return (new WorldGenOasis()).generate(world, random, Xcoord, Ycoord-1, Zcoord);
+		}
+	},
+	Cathedral{
+		@Override
+		protected void loadDefaultProperties() {
+			structureName = "Cathedral";
+			shouldGenerate = true;
+			minDistance = 3;
+			chunksPerSpawn = 400;
+//			defaultBiomesToSpawn.add(BiomeGenBase.desert.biomeName);			defaultBiomesToSpawn.add(BiomeGenBase.desertHills.biomeName);
+		}
+		@Override
+		public boolean checkToGenerate(World world, int Xcoord, int Ycoord, int Zcoord, Random random){			
+			return false;
+		}
+		@Override
+		public boolean generate(World world, int Xcoord, int Ycoord, int Zcoord, Random random){
+			return (new MazeGenerator(new BuildingManagerCathedral(world), 1, 4, 3, 11, 1, 1)).generate(world, world.rand, Xcoord, Ycoord-1, Zcoord);
 		}
 	};
 	

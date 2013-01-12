@@ -7,42 +7,50 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import projectzulu.common.world.MazeCell;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
 import projectzulu.common.world.architects.Architect;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.MazeCell;
 
 public abstract class BuildingManager {
-	World world;
-	Architect architect;
+	protected World world;
+	Architect architect; public Architect getArchitect(){return architect;}
 	public BuildingManager(World world){
 		this.world = world;
-		architect = getArchitect();
+		architect = getDefaultArchitect();
 	}
 	
 	/**
 	 * Used to Set the Architect for this building manager, Overriden in Child Classes for requried architect
 	 */
-	abstract Architect getArchitect();
+	protected abstract Architect getDefaultArchitect();
 	
 	/**
-	 * Used to Place Blocks Just below the Maze
-	 */
+	 * Used to Place Blocks Just below the Maze */
 	public abstract void createFloor(Vec3 startingPos, int width, int floorHeight, int floorNumber, int cellSize);
-
+	/** 
+	 * The evaulate Cell function are used during the processing of the maze to provide a first chance to override the defaul wall/walkway {@link #CellType} 
+	 * of the provided cell 
+	 * Typically used to mark that a building should occur at certain location or reduce of numbe of 'wall' cells */
 	public abstract boolean evaluateCarvedCells(MazeCell[][] cellList, int xIndex, int zIndex, int numCellsX, int numCellsZ, Random random);
-	
 	public abstract boolean evaluateUnCarvedCells(MazeCell[][] cellList, int xIndex, int zIndex, int numCellsX, int numCellsZ, Random random);
 
+	/** Main method where each each is proccessed with respect to its contained {@link #CellType} */
 	public abstract void createBuilding(MazeCell[][] cellList, int xIndex, int zIndex, int floorHeight, Random random);
 	
 	/**
-	 * Used for the Create of Post Maze Structures such as Entrances 
-	 */
+	 * Used for the Create of Post Maze Structures such as Entrances  */
 	public abstract void createSpecial(Vec3 startingPos, int width, int floorHeight, int floorNumber, int cellSize);
-
+	
+	/**
+	 * Helper Function to reduce clutter, process the BLockObjectData that are returned from the Architect.
+	 * Note that this function doesn't place the block directly, but calls on the BlockObject to handle itself. 
+	 * @param blockWithMeta Object that should be placed containing its 
+	 * @param position Position in the World where the Block should be palced
+	 * @param random
+	 */
 	protected void HandleBlockPlacement(BlockWithMeta blockWithMeta, ChunkCoordinates position, Random random){
-		
-		/* Check if There is a Tile At This Block, if so, remove it
+		/* 
+		 * Check if There is a Tile At This Block, if so, remove it
 		 * This Doesn't Seem to Work, So Block Is only placed if there is not TileEntity so as to prevent crash
 		 */
 		TileEntity tileEntity = world.getBlockTileEntity(position.posX, position.posY, position.posZ);
@@ -50,11 +58,9 @@ public abstract class BuildingManager {
 			tileEntity.invalidate();
 			world.removeBlockTileEntity(position.posX, position.posY, position.posZ);
 		}else{
-			
 			/* Check Block to See How Block wants to be Placed */
 			blockWithMeta.placeBlock(world, position, random);
 		}
-		
 	}
 	
 	/**
@@ -74,7 +80,6 @@ public abstract class BuildingManager {
 			}
 		}
 	}
-
 	
 	/** Returns whether or not the passed in XZ has  */
     protected Boolean isDeadEnd(MazeCell[][] allCells, int selectedX, int selectedZ, int maxCellsX, int maxCellsZ){

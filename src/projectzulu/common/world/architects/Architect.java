@@ -3,15 +3,17 @@ package projectzulu.common.world.architects;
 import java.util.ArrayList;
 import java.util.Random;
 
-import projectzulu.common.world.CellIndexDirection;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
-import projectzulu.common.world.blueprints.Blueprint;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
+import projectzulu.common.world.structures.Blueprint;
 
 /**
  * This Class Is Responsible for Supplying Individual Buildings to the BuildingManager
  * @author CaseyB
  */
 public abstract class Architect {
+	
+	public Architect() {}
 	
 	/**
 	 * Used to Track which building should be being built

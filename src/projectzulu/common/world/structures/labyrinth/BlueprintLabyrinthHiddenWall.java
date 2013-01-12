@@ -1,14 +1,15 @@
-package projectzulu.common.world.blueprints;
+package projectzulu.common.world.structures.labyrinth;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityChest;
 import projectzulu.common.core.DefaultProps;
-import projectzulu.common.world.CellIndexDirection;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
-import projectzulu.common.world.BlockDataObjects.ChestWithMeta;
-import projectzulu.common.world.BlockDataObjects.MobSpawnerWithMeta;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.blockdataobjects.ChestWithMeta;
+import projectzulu.common.world.blockdataobjects.MobSpawnerWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
+import projectzulu.common.world.structures.Blueprint;
 import cpw.mods.fml.common.Loader;
 
 public class BlueprintLabyrinthHiddenWall extends Blueprint{

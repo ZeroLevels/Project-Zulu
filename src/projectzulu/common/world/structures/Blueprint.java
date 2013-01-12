@@ -1,9 +1,9 @@
-package projectzulu.common.world.blueprints;
+package projectzulu.common.world.structures;
 
 import java.util.Random;
 
-import projectzulu.common.world.CellIndexDirection;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
 
 public abstract class Blueprint {
 	

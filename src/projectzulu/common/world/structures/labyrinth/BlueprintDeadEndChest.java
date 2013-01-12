@@ -1,13 +1,14 @@
-package projectzulu.common.world.blueprints;
+package projectzulu.common.world.structures.labyrinth;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityChest;
-import projectzulu.common.world.CellIndexDirection;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
-import projectzulu.common.world.BlockDataObjects.ChestWithMeta;
-import projectzulu.common.world.BlockDataObjects.MimicWithMeta;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.blockdataobjects.ChestWithMeta;
+import projectzulu.common.world.blockdataobjects.MimicWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
+import projectzulu.common.world.structures.Blueprint;
 
 public class BlueprintDeadEndChest extends Blueprint{
 

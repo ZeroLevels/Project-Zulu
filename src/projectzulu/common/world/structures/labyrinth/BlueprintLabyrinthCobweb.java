@@ -1,10 +1,11 @@
-package projectzulu.common.world.blueprints;
+package projectzulu.common.world.structures.labyrinth;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import projectzulu.common.world.CellIndexDirection;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
+import projectzulu.common.world.structures.Blueprint;
 
 public class BlueprintLabyrinthCobweb extends Blueprint{
 

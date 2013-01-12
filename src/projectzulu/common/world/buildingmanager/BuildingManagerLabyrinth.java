@@ -7,11 +7,11 @@ import net.minecraft.block.Block;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import projectzulu.common.world.CellType;
-import projectzulu.common.world.MazeCell;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
 import projectzulu.common.world.architects.Architect;
 import projectzulu.common.world.architects.ArchitectLabyrinth;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.CellType;
+import projectzulu.common.world.cell.MazeCell;
 
 public class BuildingManagerLabyrinth extends BuildingManager{
 
@@ -20,7 +20,7 @@ public class BuildingManagerLabyrinth extends BuildingManager{
 	}
 
 	@Override
-	Architect getArchitect() {
+	protected Architect getDefaultArchitect() {
 		return new ArchitectLabyrinth();
 	}
 
@@ -35,7 +35,7 @@ public class BuildingManagerLabyrinth extends BuildingManager{
 						new ChunkCoordinates((int)startingPos.xCoord+i, (int)startingPos.yCoord+floorNumber*(floorHeight+1), (int)startingPos.zCoord+k),
 						new Random());
 			}
-		}	
+		}
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class BuildingManagerLabyrinth extends BuildingManager{
 
 			if(isDeadEnd(cellList, xIndex, zIndex, numCellsX, numCellsZ) && cellList[xIndex][zIndex].getCellType() == 0 ){
 				cellList[xIndex][zIndex].addCellSubType(CellType.DeadEnd);
-				cellList[xIndex][zIndex].setBuildingSchematic(architect.searchUncarvedFor("deadend"));
+				cellList[xIndex][zIndex].setBuildingSchematic(getArchitect().searchUncarvedFor("deadend"));
 				return true;
 			}
 
@@ -72,7 +72,7 @@ public class BuildingManagerLabyrinth extends BuildingManager{
 		int cellSize = cellList[xIndex][zIndex].getSize();
 
 		/* Randomise the Architects State for this cell, Used to Determine what should be built */
-		architect.randomiseState(random);
+		getArchitect().randomiseState(random);
 
 		for (int cellIndex = 0; cellIndex < (cellSize*cellSize); cellIndex++){
 			/* Get Important Properties From Cell */
@@ -99,20 +99,20 @@ public class BuildingManagerLabyrinth extends BuildingManager{
 					/* Place Walls Vertically Until Size of Floor */
 					for (int j = 0; j < floorHeight; j++) {
 						HandleBlockPlacement(
-								architect.getCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random),
+								getArchitect().getCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random),
 								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
 					}
 					break;
 				case DeadEnd:
 					for (int j = 0; j < floorHeight; j++) {
-						HandleBlockPlacement(architect.getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random,
+						HandleBlockPlacement(getArchitect().getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random,
 								cellList[xIndex][zIndex].getCellIndexDirection(), cellList[xIndex][zIndex].getBuildingSchematic()),
 								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
 					}
 					break;
 				case RandomUnCarved:
 					for (int j = 0; j < floorHeight; j++) {
-						HandleBlockPlacement(architect.getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random),
+						HandleBlockPlacement(getArchitect().getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random),
 								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
 					}
 					break;

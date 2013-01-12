@@ -7,6 +7,8 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import projectzulu.common.world.buildingmanager.BuildingManager;
+import projectzulu.common.world.cell.CellType;
+import projectzulu.common.world.cell.MazeCell;
 
 public class MazeGenerator extends WorldGenerator{
 	
@@ -48,13 +50,10 @@ public class MazeGenerator extends WorldGenerator{
 		/* Generate Floors */
 		for (int j = 0; j < numberOfFloors; j++) {
 			if( j  == 0){
-				
 				/* Create Floor */
 				buildingManager.createFloor(startingPos, width, floorheight, j, cellSize);
-				
 				/* Generate Maze */
 				generateMaze(par1World, startingPos, j, floorheight, cellSize, -(width - 3), (width - 3), -(width - 3), (width - 3), buildingManager, par2Random);
-				
 				/* Create Special Strucures, i.e. Entrances */
 				buildingManager.createSpecial(startingPos, width, floorheight, j, cellSize);
 

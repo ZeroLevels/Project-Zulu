@@ -1,4 +1,4 @@
-package projectzulu.common.world;
+package projectzulu.common.world.cell;
 
 public enum CellType {
 		Wall(8),

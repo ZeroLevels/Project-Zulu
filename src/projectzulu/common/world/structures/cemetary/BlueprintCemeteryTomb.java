@@ -1,14 +1,15 @@
-package projectzulu.common.world.blueprints;
+package projectzulu.common.world.structures.cemetary;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityChest;
-import projectzulu.common.world.CellIndexDirection;
-import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
-import projectzulu.common.world.BlockDataObjects.ChestWithMeta;
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.blockdataobjects.ChestWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
+import projectzulu.common.world.structures.Blueprint;
 
-public class BlueprintCemeteryTomb2 extends Blueprint{
+public class BlueprintCemeteryTomb extends Blueprint{
 
 	@Override
 	public BlockWithMeta getBlockFromBlueprint(int cellIndex, int cellSize,
@@ -56,30 +57,7 @@ public class BlueprintCemeteryTomb2 extends Blueprint{
 				default:
 					break;
 				}
-				
-				/* Place Ceiling - 1 */
-			}else if(curHeight == maxHeight - 2 ){
-				switch (cellIndexDirection.calcDirection(cellIndex, cellSize)){
-				case NorthWall:
-				case NorthMiddle:
-					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 2);
-				case SouthWall:
-				case SouthMiddle:
-					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 3);
-				case EastWall:
-				case NorthEastCorner:
-				case SouthEastCorner:
-				case EastMiddle:
-					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 1);
-				case WestWall:
-				case NorthWestCorner:
-				case SouthWestCorner:
-				case WestMiddle:
-					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 0);
-				default:
-					break;
-				}
-				
+
 				/* Place Main Body */
 			}else if(curHeight % 2 == 0){
 				switch (cellIndexDirection.calcDirection(cellIndex, cellSize)){
@@ -90,16 +68,15 @@ public class BlueprintCemeteryTomb2 extends Blueprint{
 				case SouthMiddle:
 					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 3);
 				case EastWall:
+				case NorthEastCorner:
+				case SouthEastCorner:
 				case EastMiddle:
 					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 1);
 				case WestWall:
-				case WestMiddle:
-					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 0);
-				case NorthEastCorner:
-				case SouthEastCorner:
 				case NorthWestCorner:
 				case SouthWestCorner:
-					return new BlockWithMeta(Block.stoneBrick.blockID, 0);
+				case WestMiddle:
+					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 0);
 				default:
 					break;
 				}
@@ -112,27 +89,26 @@ public class BlueprintCemeteryTomb2 extends Blueprint{
 				case SouthMiddle:
 					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 3+4);
 				case EastWall:
+				case NorthEastCorner:
+				case SouthEastCorner:
 				case EastMiddle:
 					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 1+4);
 				case WestWall:
-				case WestMiddle:
-					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 0+4);
-				case NorthEastCorner:
-				case SouthEastCorner:
 				case NorthWestCorner:
 				case SouthWestCorner:
-					return new BlockWithMeta(Block.stoneBrick.blockID, 0);
-
+				case WestMiddle:
+					return new BlockWithMeta(Block.stairsStoneBrickSmooth.blockID, 0+4);
 				default:
 					break;
 				}
 			}
+
 		}
 		return new BlockWithMeta(0);
 	}
-	
+
 	@Override
 	public int getWeight() {
-		return 4;
+		return 2;
 	}
 }
