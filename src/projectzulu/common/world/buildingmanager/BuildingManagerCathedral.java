@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import projectzulu.common.world.architects.Architect;
 import projectzulu.common.world.architects.ArchitectCathedral;
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
 import projectzulu.common.world.cell.CellType;
 import projectzulu.common.world.cell.MazeCell;
 
@@ -32,8 +33,17 @@ public class BuildingManagerCathedral extends BuildingManager{
 	public boolean evaluateCarvedCells(MazeCell[][] cellList, int xIndex, int zIndex, int numCellsX, int numCellsZ, Random random) {
 		return false;
 	}
+	boolean created = false;
+	
 	@Override
 	public boolean evaluateUnCarvedCells(MazeCell[][] cellList, int xIndex, int zIndex, int numCellsX, int numCellsZ, Random random) {
+		if(!created){
+			cellList[xIndex][zIndex].addCellSubType(CellType.BuildingSet);
+			cellList[xIndex][zIndex].setBuildingSchematic(getArchitect().searchUncarvedFor("dome"));
+			cellList[xIndex][zIndex].setCellIndexDirection(CellIndexDirection.NorthWestCorner);
+			created = true;
+			return true;
+		}
 		return false;
 	}
 
@@ -41,6 +51,7 @@ public class BuildingManagerCathedral extends BuildingManager{
 	public void createBuilding(MazeCell[][] cellList, int xIndex, int zIndex,
 			int floorHeight, Random random) {
 		int cellSize = cellList[xIndex][zIndex].getSize();
+		System.out.println("DOOOM");
 
 		/* Randomise the Architects State for this cell, Used to Determine what should be built */
 		getArchitect().randomiseState(random);
@@ -64,6 +75,13 @@ public class BuildingManagerCathedral extends BuildingManager{
 				case InnerWall:
 					break;
 				case DeadEnd:
+					break;
+				case BuildingSet:
+					for (int j = 0; j < floorHeight; j++) {
+						HandleBlockPlacement(getArchitect().getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random,
+								cellList[xIndex][zIndex].getCellIndexDirection(), cellList[xIndex][zIndex].getBuildingSchematic()),
+								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
+					}
 					break;
 				case RandomUnCarved:
 					for (int j = 0; j < floorHeight; j++) {

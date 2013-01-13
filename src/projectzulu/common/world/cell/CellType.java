@@ -9,6 +9,7 @@ public enum CellType {
 		InnerWall(4),
 		DeadEnd(5),
 		RandomUnCarved(6),
+		BuildingSet(9),
 		AirCell(7);
 		
 		public final int index;

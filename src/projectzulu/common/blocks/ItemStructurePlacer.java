@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemStructurePlacer extends Item{
 
-	String[] structureName = new String[]{"Oasis", "Pyramid", "Labyrinth", "Cemetary"};
+	String[] structureName = new String[]{"Oasis", "Pyramid", "Labyrinth", "Cemetary", "Cathedral"};
 
 	public ItemStructurePlacer(int par1) {
 		super(par1);
@@ -56,6 +56,10 @@ public class ItemStructurePlacer extends Item{
 				/* Cemetary Generation */
 				StructureManager.tryToGenerateSpecificStructure(StructureManager.Cemetary, par2World, Xcoord, Ycoord, Zcoord, par2World.rand);
 				break;
+			case 4:
+				/* Cemetary Generation */
+				StructureManager.tryToGenerateSpecificStructure(StructureManager.Cathedral, par2World, Xcoord, Ycoord, Zcoord, par2World.rand);
+				break;
 			default:
 				break;
 			}	
@@ -64,7 +68,6 @@ public class ItemStructurePlacer extends Item{
 		if(!par3EntityPlayer.capabilities.isCreativeMode){
 			par1ItemStack.stackSize--;
 		}
-
 	}
 
 	@Override

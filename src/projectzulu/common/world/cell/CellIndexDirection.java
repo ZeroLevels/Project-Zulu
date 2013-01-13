@@ -1,8 +1,15 @@
 package projectzulu.common.world.cell;
 
 import java.util.Random;
-
+/**
+ * It should be noted That in its Current form, most of its functionality assumes an cellSize that is an odd number
+ * i.e. Grabbing the Ceneter doesn't exist for odd numbers
+ * It should be extended eventually for even numbers to achieve features such as cenetered double doors, but for now it's not and care should be taken.
+ * A minimum Cell Size of 2-3 is assumed. As a Cell converges to a point features disapear. 
+ */
 public enum CellIndexDirection{
+	Unknown, // Used for a Function if Nothing else should fit
+
 	Middle,
 	Inner,
 	NorthMiddle,
@@ -16,7 +23,20 @@ public enum CellIndexDirection{
 	NorthWall,
 	SouthWall,
 	WestWall,
-	EastWall;
+	EastWall,
+	
+	NorthEastSouthWestDiagonal,
+	SouthEastNorthWestDiagonal;
+
+	/* Cell Index Format
+	 * CS = Cell Size
+	 * 0	CS		2*CS	3*CS 	... 	CS*(CS-1)
+	 * 1
+	 * 2
+	 * 3
+	 * ...
+	 * CS-1	2CS-1	3CS-1	4*CS-1	...		CS*CS-1
+	 */
 	
 	public CellIndexDirection randomCardinalDirection(Random random){
 		switch (random.nextInt(4)) {
@@ -33,9 +53,77 @@ public enum CellIndexDirection{
 		}
 	}
 	
+	
+	/**
+	 * Effectively Gets the Column of the Matrix represented by Index. Western Edge is 0, Eastern Edge is CellSize - 1.
+	 */
+	public int getWestEastIndex(int cellIndex, int cellSize){
+		return cellIndex / cellSize;
+	}
+	
+	/**
+	 * Effectively Gets the Row of the Matrix represented by Index. Northern Edge is 0, Southern Edge is CellSize - 1.
+	 */
+	public int getNorthSouthIndex(int cellIndex, int cellSize){
+		return cellIndex % cellSize;
+	}
+	
+	/** 
+	 * Return an Index Between between -CellSize and +CellSize representing the Offset from the NorthEastSouthWest Diagonal 
+	 * - is to the West, + is to the East */
+	public int getNESWDiagonalIndex(int cellIndex, int cellSize){
+		for (int i = -(cellSize-1); i < cellSize; i++){
+			int indexRow = cellIndex % cellSize;
+			int indexCol = cellIndex / cellSize;
+			if( cellSize-1-indexCol - indexRow + i == 0){
+				return i;
+			}
+		}
+		/* This Should *Never* Run, Thus we pass a value greater than Cell Size (which is an Impossible index)
+		 * The only way this happens is if index is less than zero or greater than (cellSize^2) - 1 which by how index is declared is impossible */
+		return cellSize+1;
+	}
+	
+	/** 
+	 * Return an Index Between between -CellSize and +CellSize representing the Offset from the SouthEastNorthWestDiagonal Diagonal
+	 * - is to the West, + is to the East */
+	public int getSENWDiagonalIndex(int cellIndex, int cellSize){
+		for (int i = -(cellSize-1); i < cellSize; i++){
+			int indexRow = cellIndex % cellSize;
+			int indexCol = cellIndex / cellSize;
+			if( indexRow - indexCol + i == 0){
+				return i;
+			}
+		}
+		/* This Should *Never* Run, Thus we pass a value greater than Cell Size (which is an Impossible index)
+		 * The only way this happens is if index is less than zero or greater than (cellSize^2) - 1 which by how index is declared is impossible */
+		return cellSize+1;
+	}
+	
+	/**
+	 * Returns the Main Diagonal SENW or NESW diagonals if the index is along either, returns unknown if not on either
+	 * Should Probably use either {@link #getNESWDiagonalIndex} or {@link #getSENWDiagonalIndex} though these are faster due to the absence of a loop
+	 */
+	public CellIndexDirection getMainDiagonalNESW(int cellIndex, int cellSize){
+		int indexRow = cellIndex % cellSize;
+		int indexCol = cellIndex / cellSize;
+		if(cellSize-1-indexCol - indexRow == 0){
+			return NorthEastSouthWestDiagonal;
+		}
+		return Unknown;
+	}
+	public CellIndexDirection getMainDiagonalSENW(int cellIndex, int cellSize){
+		int indexRow = cellIndex % cellSize;
+		int indexCol = cellIndex / cellSize;
+		if(indexRow - indexCol == 0){
+			return SouthEastNorthWestDiagonal;
+		}
+		return Unknown;
+	}
+	
 	public CellIndexDirection calcDirection(int cellIndex, int cellSize){
-		
-		/* Check if Middle */
+		/* Check if Middle 
+		 * Only Exists if cellSize is an odd Number */
 		if(cellSize % 2 == 1){
 			if(cellIndex == cellSize*(cellSize-1)/2+(cellSize-1)/2){
 				return Middle;
@@ -71,7 +159,6 @@ public enum CellIndexDirection{
 		}else if( cellIndex >= 0 && cellIndex < cellSize ){
 			return WestWall;
 		}
-		
 		/* If Nothing Else Mark as Inner */
 		return Inner;
 	}

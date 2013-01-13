@@ -13,7 +13,6 @@ public abstract class Blueprint {
 		return 1;
 	}
 	
-	
 	/**
 	 * Used to Search Architect list for a specific Building Type
 	 * Should be All lowercase

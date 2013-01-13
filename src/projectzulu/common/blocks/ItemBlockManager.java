@@ -728,6 +728,7 @@ public enum ItemBlockManager {
 	        LanguageRegistry.addName(new ItemStack(item,1,1), "Pyramid Structure Placer");
 	        LanguageRegistry.addName(new ItemStack(item,1,2), "Labyrinth Structure Placer");
 	        LanguageRegistry.addName(new ItemStack(item,1,3), "Cemetary Structure Placer");
+	        LanguageRegistry.addName(new ItemStack(item,1,4), "Cathedral Structure Placer");
 		}
 
 		@Override

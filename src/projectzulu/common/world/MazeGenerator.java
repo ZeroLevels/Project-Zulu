@@ -50,10 +50,13 @@ public class MazeGenerator extends WorldGenerator{
 		/* Generate Floors */
 		for (int j = 0; j < numberOfFloors; j++) {
 			if( j  == 0){
+				
 				/* Create Floor */
 				buildingManager.createFloor(startingPos, width, floorheight, j, cellSize);
+				
 				/* Generate Maze */
 				generateMaze(par1World, startingPos, j, floorheight, cellSize, -(width - 3), (width - 3), -(width - 3), (width - 3), buildingManager, par2Random);
+				
 				/* Create Special Strucures, i.e. Entrances */
 				buildingManager.createSpecial(startingPos, width, floorheight, j, cellSize);
 
