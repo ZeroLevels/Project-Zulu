@@ -29,9 +29,9 @@ public class MobSpawnerWithMeta extends BlockWithMeta{
 				position.posY,
 				position.posZ);
 
-//		if (tileEntityMobSpawner != null){
-			tileEntityMobSpawner.setMobID( mobName);
-//		}
+		if (tileEntityMobSpawner != null){
+			tileEntityMobSpawner.setMobID(mobName);
+		}
+		
 	}
-
 }
