@@ -5,6 +5,7 @@ import java.util.Random;
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.CellIndexDirection;
 import projectzulu.common.world.structures.cemetary.BlueprintCathedralDome;
+import projectzulu.common.world.structures.cemetary.BlueprintCathedralHallway;
 import projectzulu.common.world.structures.cemetary.BlueprintCemetaryFountain;
 import projectzulu.common.world.structures.cemetary.BlueprintCemetaryFountain2;
 import projectzulu.common.world.structures.cemetary.BlueprintCemeteryTomb;
@@ -16,6 +17,7 @@ public class ArchitectCathedral extends Architect{
 	public ArchitectCathedral(){
 		super();
 		unCarvedBlueprintList.add(new BlueprintCathedralDome());
+		unCarvedBlueprintList.add(new BlueprintCathedralHallway());
 //		carvedBlueprintList.add(new BlueprintCemeteryTomb());
 //		carvedBlueprintList.add(new BlueprintCemeteryTomb2());
 //		carvedBlueprintList.add(new BlueprintCemetaryFountain());
@@ -34,6 +36,6 @@ public class ArchitectCathedral extends Architect{
 	public BlockWithMeta getUnCarvedBlock(int cellIndex, int cellSize, int curHeight, int maxHeight, int xIndex, int zIndex,
 			Random random, CellIndexDirection cellIndexDirection,
 			int buildingIndex) {
-		return unCarvedBlueprintList.get(unCarvedState).getBlockFromBlueprint(cellIndex, cellSize, curHeight, maxHeight, xIndex, zIndex, random, cellIndexDirection);
+		return unCarvedBlueprintList.get(buildingIndex).getBlockFromBlueprint(cellIndex, cellSize, curHeight, maxHeight, xIndex, zIndex, random, cellIndexDirection);
 	}
 }

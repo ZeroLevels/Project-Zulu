@@ -3,6 +3,8 @@ package projectzulu.common.world.buildingmanager;
 import java.util.Random;
 import java.util.Set;
 
+import org.lwjgl.util.Point;
+
 import net.minecraft.block.Block;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
@@ -31,22 +33,120 @@ public class BuildingManagerCathedral extends BuildingManager{
 
 	@Override
 	public boolean evaluateCarvedCells(MazeCell[][] cellList, int xIndex, int zIndex, int numCellsX, int numCellsZ, Random random) {
+		cellList[xIndex][zIndex].setCellSubType(CellType.AirCell);
 		return false;
 	}
 	boolean created = false;
 	
 	@Override
 	public boolean evaluateUnCarvedCells(MazeCell[][] cellList, int xIndex, int zIndex, int numCellsX, int numCellsZ, Random random) {
-		if(!created){
-			cellList[xIndex][zIndex].addCellSubType(CellType.BuildingSet);
-			cellList[xIndex][zIndex].setBuildingSchematic(getArchitect().searchUncarvedFor("dome"));
-			cellList[xIndex][zIndex].setCellIndexDirection(CellIndexDirection.NorthWestCorner);
-			created = true;
-			return true;
+		if(!created && random.nextInt(10) == 0){
+			/* Try to Line Up an Rectangle MxN Centered around xIndex, zIndex. */
+			Point desiredSize = new Point(6,6);
+			Point cellCoordsToBuild = searchForValidBuildingSquare(desiredSize, new Point(xIndex,zIndex), new Point(numCellsX,numCellsZ));
+			if(cellCoordsToBuild.getX() != -1 && cellCoordsToBuild.getY() != -1){
+				int xPoint = 3;	int yPoint = 3;
+				
+				xPoint = 2;	yPoint = 2;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("dome"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.NorthWestCorner);
+				
+				xPoint = 3;	yPoint = 2;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("dome"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.NorthEastCorner);
+
+				xPoint = 2;	yPoint = 3;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("dome"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.SouthWestCorner);
+
+				xPoint = 3;	yPoint = 3;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("dome"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.SouthEastCorner);
+
+				xPoint = 2;	yPoint = 4;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.WestWall);
+				xPoint = 3;	yPoint = 4;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.EastWall);
+				xPoint = 2;	yPoint = 1;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.WestWall);
+				xPoint = 3;	yPoint = 1;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.EastWall);
+				xPoint = 2;	yPoint = 0;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.WestWall);
+				xPoint = 3;	yPoint = 0;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.EastWall);
+
+				xPoint = 1;	yPoint = 2;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.NorthWall);
+				xPoint = 1;	yPoint = 3;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.SouthWall);
+
+				xPoint = 4;	yPoint = 2;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.NorthWall);
+				xPoint = 4;	yPoint = 3;
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellSubType(CellType.BuildingSet);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setBuildingSchematic(getArchitect().searchUncarvedFor("hallway"));
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellType(2);
+				cellList[cellCoordsToBuild.getX()+xPoint][cellCoordsToBuild.getY()+yPoint].setCellIndexDirection(CellIndexDirection.SouthWall);
+
+				
+				created = true;
+				return true;
+			}
 		}
 		return false;
 	}
-
+	
+	private Point searchForValidBuildingSquare(Point desiredSize, Point cellCoord, Point numCells){
+		Point validPoint = new Point(-1, -1);
+		for (int i = -desiredSize.getX(); i <= desiredSize.getX(); i++){
+			for (int k = -desiredSize.getY(); k <= desiredSize.getY(); k++){
+				validPoint.setLocation(cellCoord.getX()+i, cellCoord.getY()+k);
+				/* Evaluate Each Point To if It Outside Bound, if all are valid Return Point*/
+				if(validPoint.getX() >= 0 && validPoint.getX() + desiredSize.getX() <= numCells.getX()
+						&& validPoint.getY() >= 0 && validPoint.getY() + desiredSize.getY() <= numCells.getY()){
+					return validPoint;
+				}
+			}
+		}
+		return new Point(-1, -1);
+	}
+	
 	@Override
 	public void createBuilding(MazeCell[][] cellList, int xIndex, int zIndex,
 			int floorHeight, Random random) {
@@ -67,15 +167,6 @@ public class BuildingManagerCathedral extends BuildingManager{
 
 			for (CellType cellType : cellSubType){
 				switch (cellType){
-				case NorthWall:
-				case SoutherWall:
-				case EastWall:
-				case WestWall:
-					break;
-				case InnerWall:
-					break;
-				case DeadEnd:
-					break;
 				case BuildingSet:
 					for (int j = 0; j < floorHeight; j++) {
 						HandleBlockPlacement(getArchitect().getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random,
@@ -83,18 +174,10 @@ public class BuildingManagerCathedral extends BuildingManager{
 								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
 					}
 					break;
-				case RandomUnCarved:
-					for (int j = 0; j < floorHeight; j++) {
-						HandleBlockPlacement(getArchitect().getUnCarvedBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random),
-								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
-					}
-					break;
-				case AirCell:
+				default:
 					for (int j = 0; j < floorHeight; j++) {
 						HandleBlockPlacement(new BlockWithMeta(0), new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
 					}
-					break;
-				default:
 					break;
 				}
 

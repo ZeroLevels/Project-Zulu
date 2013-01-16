@@ -1,6 +1,8 @@
 package projectzulu.common.world.cell;
 
+import java.util.EnumSet;
 import java.util.Random;
+import java.util.Set;
 /**
  * It should be noted That in its Current form, most of its functionality assumes an cellSize that is an odd number
  * i.e. Grabbing the Ceneter doesn't exist for odd numbers
@@ -57,21 +59,21 @@ public enum CellIndexDirection{
 	/**
 	 * Effectively Gets the Column of the Matrix represented by Index. Western Edge is 0, Eastern Edge is CellSize - 1.
 	 */
-	public int getWestEastIndex(int cellIndex, int cellSize){
+	public static int getWestEastIndex(int cellIndex, int cellSize){
 		return cellIndex / cellSize;
 	}
 	
 	/**
 	 * Effectively Gets the Row of the Matrix represented by Index. Northern Edge is 0, Southern Edge is CellSize - 1.
 	 */
-	public int getNorthSouthIndex(int cellIndex, int cellSize){
+	public static int getNorthSouthIndex(int cellIndex, int cellSize){
 		return cellIndex % cellSize;
 	}
 	
 	/** 
-	 * Return an Index Between between -CellSize and +CellSize representing the Offset from the NorthEastSouthWest Diagonal 
-	 * - is to the West, + is to the East */
-	public int getNESWDiagonalIndex(int cellIndex, int cellSize){
+	 * Return an Index Between between -(CellSize-1) and +(CellSize-1) representing the Offset from the NorthEastSouthWest Diagonal 
+	 * - is to the West, + is to the East; Main Diagonal is 0 */
+	public static int getNESWDiagonalIndex(int cellIndex, int cellSize){
 		for (int i = -(cellSize-1); i < cellSize; i++){
 			int indexRow = cellIndex % cellSize;
 			int indexCol = cellIndex / cellSize;
@@ -87,7 +89,7 @@ public enum CellIndexDirection{
 	/** 
 	 * Return an Index Between between -CellSize and +CellSize representing the Offset from the SouthEastNorthWestDiagonal Diagonal
 	 * - is to the West, + is to the East */
-	public int getSENWDiagonalIndex(int cellIndex, int cellSize){
+	public static int getSENWDiagonalIndex(int cellIndex, int cellSize){
 		for (int i = -(cellSize-1); i < cellSize; i++){
 			int indexRow = cellIndex % cellSize;
 			int indexCol = cellIndex / cellSize;
@@ -104,7 +106,7 @@ public enum CellIndexDirection{
 	 * Returns the Main Diagonal SENW or NESW diagonals if the index is along either, returns unknown if not on either
 	 * Should Probably use either {@link #getNESWDiagonalIndex} or {@link #getSENWDiagonalIndex} though these are faster due to the absence of a loop
 	 */
-	public CellIndexDirection getMainDiagonalNESW(int cellIndex, int cellSize){
+	public static CellIndexDirection getMainDiagonalNESW(int cellIndex, int cellSize){
 		int indexRow = cellIndex % cellSize;
 		int indexCol = cellIndex / cellSize;
 		if(cellSize-1-indexCol - indexRow == 0){
@@ -119,6 +121,29 @@ public enum CellIndexDirection{
 			return SouthEastNorthWestDiagonal;
 		}
 		return Unknown;
+	}
+	
+	/**
+	 * Similar to {@link #calcDirection} with the Exception That it only return Walls and Returns EnumSet
+	 * Reminder: Corner Pieces belong to Two Walls
+	 * {@link #NorthWall}, {@link #SouthWall}, {@link #WestWall}, {@link #EastWall}
+	 */
+	public static Set<CellIndexDirection> calcIfWall(int cellIndex, int cellSize){
+		EnumSet<CellIndexDirection> enumSet = EnumSet.noneOf(CellIndexDirection.class);
+		/* Check if Outer Edge */
+		if( (cellIndex % cellSize == (0)) ){
+			enumSet.add(NorthWall);
+		}
+		if( (cellIndex % cellSize == (cellSize-1)) ){
+			enumSet.add(SouthWall);
+		}
+		if( cellIndex >= cellSize*(cellSize-1) && cellIndex < cellSize*cellSize ){
+			enumSet.add(EastWall);
+		}
+		if( cellIndex >= 0 && cellIndex < cellSize ){
+			enumSet.add(WestWall);
+		}
+		return enumSet;
 	}
 	
 	public CellIndexDirection calcDirection(int cellIndex, int cellSize){
