@@ -15,7 +15,7 @@ public class BlueprintCathedralDome extends Blueprint{
 
 	@Override
 	public BlockWithMeta getBlockFromBlueprint(int cellIndex, int cellSize,
-			int curHeight, int maxHeight, int xIndex, int zIndex, Random random, CellIndexDirection cellIndexDirection) {		
+			int curHeight, int maxHeight, int xIndex, int zIndex, Random random, CellIndexDirection cellIndexDirection) {
 		/* Build Dome At Top of Cell */
 		/* Starting From maxHeight-5, we want to Take the Edge Make it air, increase the # of diagonals that air as we rise */
 		int distanceFromTop = maxHeight - curHeight;

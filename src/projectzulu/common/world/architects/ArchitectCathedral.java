@@ -2,8 +2,11 @@ package projectzulu.common.world.architects;
 
 import java.util.Random;
 
+import org.lwjgl.util.Point;
+
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.CellIndexDirection;
+import projectzulu.common.world.structures.BlueprintSetCathedral;
 import projectzulu.common.world.structures.cemetary.BlueprintCathedralDome;
 import projectzulu.common.world.structures.cemetary.BlueprintCathedralHallway;
 import projectzulu.common.world.structures.cemetary.BlueprintCemetaryFountain;
@@ -16,12 +19,9 @@ public class ArchitectCathedral extends Architect{
 	
 	public ArchitectCathedral(){
 		super();
+		blueprintSetList.add(new BlueprintSetCathedral());
 		unCarvedBlueprintList.add(new BlueprintCathedralDome());
 		unCarvedBlueprintList.add(new BlueprintCathedralHallway());
-//		carvedBlueprintList.add(new BlueprintCemeteryTomb());
-//		carvedBlueprintList.add(new BlueprintCemeteryTomb2());
-//		carvedBlueprintList.add(new BlueprintCemetaryFountain());
-//		carvedBlueprintList.add(new BlueprintCemetaryFountain2());
 	}
 	
 	@Override
@@ -37,5 +37,11 @@ public class ArchitectCathedral extends Architect{
 			Random random, CellIndexDirection cellIndexDirection,
 			int buildingIndex) {
 		return unCarvedBlueprintList.get(buildingIndex).getBlockFromBlueprint(cellIndex, cellSize, curHeight, maxHeight, xIndex, zIndex, random, cellIndexDirection);
+	}
+
+	@Override
+	public BlockWithMeta getBlueprintSetBlock(Point cellCoord, CellIndexDirection cellIndexDirection,
+			int bluePrintIndex, int buildingIndex, int cellIndex, int cellSize, int curHeight, int maxHeight, Random random) {
+		return blueprintSetList.get(bluePrintIndex).getBlockFromBlueprint(buildingIndex, cellCoord, cellIndexDirection, cellIndex, cellSize, curHeight, maxHeight, random);
 	}
 }

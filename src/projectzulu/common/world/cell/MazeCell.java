@@ -28,6 +28,9 @@ public class MazeCell {
 	/** used to Determine What building should go here, used for multi part buildings where memory of what building should go here must be remembered
 	 * -1 Indicated that random building of type depending on cellSubType should be selected */
 	private int buildingSchematic = -1;
+	/** Similar To buildingSchematic, but References The Set which holds the Blueprints */
+	private int buildingSet = -1;
+
 	/**
 	 *  Used by MazeGen To mark the Type this Cell should become
 	 *  Marked at Different Stages of processing in conjunction with cellType
@@ -50,6 +53,10 @@ public class MazeCell {
 	
 	public void setBuildingSchematic(int buildingSchematic){this.buildingSchematic = buildingSchematic;}
 	public int getBuildingSchematic(){return this.buildingSchematic;}
+	
+	public void setBuildingSet(int buildingSet){this.buildingSet = buildingSet;}
+	public int getBuildingSet(){return this.buildingSet;}
+
 	
 	public void setCellType(int cellType){ this.cellType = cellType;}
 	public int getCellType(){ return cellType; }

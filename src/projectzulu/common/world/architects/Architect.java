@@ -3,9 +3,12 @@ package projectzulu.common.world.architects;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.lwjgl.util.Point;
+
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.CellIndexDirection;
 import projectzulu.common.world.structures.Blueprint;
+import projectzulu.common.world.structures.BlueprintSet;
 
 /**
  * This Class Is Responsible for Supplying Individual Buildings to the BuildingManager
@@ -22,11 +25,10 @@ public abstract class Architect {
 	int carvedState;
 	
 	/**
-	 * List of BLueprints for different Cell SubStates
-	 */
+	 * List of Blueprints for different Cell SubStates */
+	ArrayList<BlueprintSet> blueprintSetList = new ArrayList<BlueprintSet>();
 	ArrayList<Blueprint> unCarvedBlueprintList = new ArrayList<Blueprint>();
 	ArrayList<Blueprint> carvedBlueprintList = new ArrayList<Blueprint>();
-
 	
 	/**
 	 * Marks the orientation within the cell of an invidiual node
@@ -40,6 +42,7 @@ public abstract class Architect {
 		cellIndexDirection = cellIndexDirection.randomCardinalDirection(random);
 	}
 	
+	
 	public BlockWithMeta getCarvedBlock(int cellIndex, int cellSize, int curHeight, int maxHeight, int xIndex, int zIndex, Random random){
 		return getCarvedBlock(cellIndex, cellSize, curHeight, maxHeight, xIndex, zIndex, random, cellIndexDirection, carvedState);
 	}
@@ -49,7 +52,20 @@ public abstract class Architect {
 	
 	public abstract BlockWithMeta getCarvedBlock(int cellIndex, int cellSize, int curHeight, int maxHeight, int xIndex, int zIndex, Random random, CellIndexDirection cellIndexDirection, int buildingIndex);
 	public abstract BlockWithMeta getUnCarvedBlock(int cellIndex, int cellSize, int curHeight, int maxHeight, int xIndex, int zIndex, Random random, CellIndexDirection cellIndexDirection, int buildingIndex);
-
+	public abstract BlockWithMeta getBlueprintSetBlock(Point cellCoord, CellIndexDirection cellIndexDirection, int bluePrintIndex, int buildingIndex, int cellIndex, int cellSize, int curHeight, int maxHeight, Random random);
+	
+	public int searchBlueprintSetFor(String identifier){
+		for (int i = 0; i < blueprintSetList.size(); i++) {
+			if(blueprintSetList.get(i).getIdentifier().equals(identifier)){
+				return i;
+			}
+		}
+		return -1;
+	}
+	public BlueprintSet getBlueprintSet(int buildingSet){
+		return blueprintSetList.get(buildingSet);
+	}
+	
 	public int searchUncarvedFor(String identifier){
 		for (int i = 0; i < unCarvedBlueprintList.size(); i++) {
 			if(unCarvedBlueprintList.get(i).getIdentifier().equals(identifier)){
@@ -62,6 +78,15 @@ public abstract class Architect {
 	public int searchCarvedFor(String identifier){
 		for (int i = 0; i < carvedBlueprintList.size(); i++) {
 			if(carvedBlueprintList.get(i).getIdentifier().equals(identifier)){
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static int searchListForIdentifer(String identifier, ArrayList<Blueprint> bluePrintList){
+		for (int i = 0; i < bluePrintList.size(); i++) {
+			if(bluePrintList.get(i).getIdentifier().equals(identifier)){
 				return i;
 			}
 		}

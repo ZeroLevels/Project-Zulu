@@ -2,6 +2,8 @@ package projectzulu.common.world.architects;
 
 import java.util.Random;
 
+import org.lwjgl.util.Point;
+
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.CellIndexDirection;
 import projectzulu.common.world.structures.labyrinth.BlueprintDeadEndChest;
@@ -39,6 +41,12 @@ public class ArchitectLabyrinth extends Architect{
 			return unCarvedBlueprintList.get(buildingIndex).getBlockFromBlueprint(cellIndex, cellSize, curHeight, maxHeight, xIndex, zIndex, random, cellIndexDirection);
 		}
 		return unCarvedBlueprintList.get(unCarvedState).getBlockFromBlueprint(cellIndex, cellSize, curHeight, maxHeight, xIndex, zIndex, random, cellIndexDirection);
+	}
+
+	@Override
+	public BlockWithMeta getBlueprintSetBlock(Point cellCoord, CellIndexDirection cellIndexDirection, 
+			int bluePrintIndex,	int buildingIndex, int cellIndex, int cellSize, int curHeight, int maxHeight, Random random) {
+		return null;
 	}
 	
 	
