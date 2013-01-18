@@ -50,9 +50,10 @@ public class BuildingManagerCathedral extends BuildingManager{
 			Point cellCoordsToBuild = searchForValidBuildingSquare(desiredSize, new Point(xIndex,zIndex), new Point(numCellsX,numCellsZ));
 
 			if(cellCoordsToBuild.getX() != -1 && cellCoordsToBuild.getY() != -1){
-				bluePrintSet.assignCellsWithBlueprints(cellList, new Point(xIndex,zIndex), new Point(numCellsX,numCellsZ), random, cellCoordsToBuild, buildingSetIndex);				
+				bluePrintSet.assignCellsWithBlueprints(cellList, new Point(numCellsX,numCellsZ), random, cellCoordsToBuild, buildingSetIndex);				
 				created = true;
-				return true;
+				/* We Return False as We Don't Want MazeGenerator To Assign The Cell*/
+				return false;
 			}
 		}
 		return false;
@@ -86,25 +87,19 @@ public class BuildingManagerCathedral extends BuildingManager{
 		for (int cellIndex = 0; cellIndex < (cellSize*cellSize); cellIndex++){
 			/* Get Important Properties From Cell */
 			Set<CellType> cellSubType = cellList[xIndex][zIndex].getCellSubType();
-			ChunkCoordinates position = new ChunkCoordinates(
-					(int)cellList[xIndex][zIndex].getLocation(cellIndex).xCoord,
-					(int)cellList[xIndex][zIndex].getLocation(cellIndex).yCoord,
-					(int)cellList[xIndex][zIndex].getLocation(cellIndex).zCoord);
+			Vec3 location = cellList[xIndex][zIndex].getLocation(cellIndex);
+			if( location == null){ continue; }
+			ChunkCoordinates position = new ChunkCoordinates( (int)location.xCoord, (int)location.yCoord, (int)location.zCoord);
 
 			for (CellType cellType : cellSubType){
 				switch (cellType){
 				case BuildingSet:
-					for (int j = 0; j < floorHeight; j++) {
+					for (int j = 0; j < cellList[xIndex][zIndex].getCellHeight(); j++) {
 						HandleBlockPlacement(getArchitect().getBlueprintSetBlock(new Point(xIndex,zIndex), cellList[xIndex][zIndex].getCellIndexDirection(), 
 								cellList[xIndex][zIndex].getBuildingSet(), cellList[xIndex][zIndex].getBuildingSchematic(),
-								cellIndex, cellSize, j, floorHeight, random),
+								cellIndex, cellSize, j, cellList[xIndex][zIndex].getCellHeight(), random),
 								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
-
-						
-//						HandleBlockPlacement(getArchitect().getBlueprintSetBlock(cellIndex, cellSize, j, floorHeight, xIndex, zIndex, random,
-//								cellList[xIndex][zIndex].getCellIndexDirection(), cellList[xIndex][zIndex].getBuildingSchematic()),
-//								new ChunkCoordinates(position.posX, position.posY+j, position.posZ), random);
-					}
+						}
 					break;
 				default:
 					for (int j = 0; j < floorHeight; j++) {
@@ -118,8 +113,5 @@ public class BuildingManagerCathedral extends BuildingManager{
 	}
 
 	@Override
-	public void createSpecial(Vec3 startingPos, int width, int floorHeight,
-			int floorNumber, int cellSize) {
-		// TODO Auto-generated method stub
-	}
+	public void createSpecial(Vec3 startingPos, int width, int floorHeight, int floorNumber, int cellSize) {}
 }

@@ -16,7 +16,7 @@ import projectzulu.common.world.structures.cemetary.BlueprintCathedralHallway;
 public interface BlueprintSet {
 	ArrayList<Blueprint> bluePrints = new ArrayList<Blueprint>();
 	
-	public abstract void assignCellsWithBlueprints(MazeCell[][] cellList, Point cellCoord, Point numCells, Random random, Point buildCoords, int buildingSetIndex);
+	public abstract void assignCellsWithBlueprints(MazeCell[][] cellList, Point numCells, Random random, Point buildCoords, int buildingSetIndex);
 	public abstract BlockWithMeta getBlockFromBlueprint(int bluePrintIndex, Point cellCoord, CellIndexDirection cellIndexDirection, int cellIndex, int cellSize, int curHeight, int maxHeight, Random random);
 	public abstract Point getRequiredFootPrint();
 	

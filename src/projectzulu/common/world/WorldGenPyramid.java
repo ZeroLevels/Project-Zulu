@@ -155,7 +155,7 @@ public class WorldGenPyramid extends WorldGenerator
 		/* Run Constructor of Each Array */
 		for (int i = 0; i < numCellsZ; i++) {
 			for (int k = 0; k < numCellsX; k++) {
-				allCells[i][k] = new MazeCell(cell_width);
+				allCells[i][k] = new MazeCell(cell_width, floorHeight);
 			}
 		}
 

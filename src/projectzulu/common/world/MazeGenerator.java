@@ -82,7 +82,7 @@ public class MazeGenerator extends WorldGenerator{
     	/* Run Constructor of Each Array */
     	for (int i = 0; i < numCellsX; i++){
     		for (int k = 0; k < numCellsZ; k++) {
-    			allCells[i][k] = new MazeCell(cell_width);
+    			allCells[i][k] = new MazeCell(cell_width, floorHeight);
     		}
 		}
     	

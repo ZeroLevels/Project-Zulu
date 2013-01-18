@@ -90,7 +90,7 @@ public abstract class Architect {
 				return i;
 			}
 		}
-		return -1;
+		throw new IllegalArgumentException("Tried to Grab Building with Id string '" + identifier+"' that is not present.");
 	}
 	
 	public int getWeightedState(ArrayList<Blueprint> bluePrintList, Random random){

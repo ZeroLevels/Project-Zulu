@@ -21,6 +21,7 @@ public class BlueprintHelper {
 	 * @return Block that is Going to be Placed
 	 * @return
 	 */
+	@Deprecated
 	public static BlockWithMeta getSlopeBlock(BlockWithMeta placeableBlock, int directionIndex, int slopeSpacing, int curHeight, int maxHeight, int cellIndex, int cellSize, BlockWithMeta...fillerBlocks ){
 		int distanceFromTop = maxHeight - curHeight;
 		/* Create "Steps" in the Dome */
@@ -33,14 +34,58 @@ public class BlueprintHelper {
 			return fillerBlocks[0];
 		}
 		
-		/* At Max height, But NOT above the Placed Slope, Create a 'Roof' of StoneBrick */
+		/* At Max height, But NOT above the Placed Slope, Create a 'Roof' of placeableBlock or FillerBlock[3] if present */
 		if(curHeight == maxHeight-1 && directionIndex/slopeSpacing < distanceFromTop){
-			return placeableBlock;
-		}		
+			if(fillerBlocks.length > 2){
+				return fillerBlocks[2];
+			}else{
+				return placeableBlock;
+			}
+		}
 		
 		/* Below Maximum Height and 'Roof', Use a Filler if Provided */
 		if(directionIndex/slopeSpacing < distanceFromTop && fillerBlocks.length > 1){
 			return fillerBlocks[1];
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Method used by Blueprints to Create a Slope
+	 * @param directionIndex : integer indicating how far along the slope hte index is
+	 * @param slopeSpacing : Affects the slope of the 'slope', increase decreases steepness, 0 Throw error
+	 * @param curHeight : Height of the Index
+	 * @param floor : The Bottom height For the Slope
+	 * @param maxHeight : Height of the Cell
+	 * @param cellIndex : Index of the Curent Cell
+	 * @param cellSize : Size of The Cell
+	 * @param fillerBlocks : Optional Block Placements. [0] Slope Change in Elevation, [1] Above Slope Filler, [2] Below Slope Filler, 
+	 * @return Block that is Going to be Placed
+	 */
+	public static BlockWithMeta getSlopeBlock(BlockWithMeta placeableBlock, int directionIndex, int minIndex, int maxIndex, int slopeSpacing, int curHeight, int floor, int maxHeight, int cellIndex, int cellSize, BlockWithMeta...fillerBlocks){
+		int distanceFromTop = maxHeight - curHeight;
+		int corectDirecIndex = Math.min(Math.max(directionIndex, minIndex), maxIndex);
+		int lowerdirectionIndex = Math.min(Math.max(directionIndex+1, minIndex), maxIndex);
+		System.out.println("ASP " + directionIndex + " " + corectDirecIndex + " " + lowerdirectionIndex);
+		System.out.println("IOP " + distanceFromTop + " " + maxHeight + " " + curHeight);
+		/* Create "Steps" in the Dome */
+		if(corectDirecIndex/slopeSpacing == distanceFromTop){
+			System.out.println("Placed");
+			if( lowerdirectionIndex/slopeSpacing != corectDirecIndex/slopeSpacing && fillerBlocks.length > 0){
+				return fillerBlocks[0];	
+			}else{
+				return placeableBlock;
+			}
+		}
+		
+		/* When Above The Slope Axis Fill will Provided Material */
+		if(corectDirecIndex/slopeSpacing > distanceFromTop && fillerBlocks.length > 1){
+			return fillerBlocks[1];
+		}
+		/* When Below The Slope Axis Fill will Provided Material */
+		else if(fillerBlocks.length > 2){
+			return fillerBlocks[2];
 		}
 		
 		return null;

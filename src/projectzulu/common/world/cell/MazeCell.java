@@ -12,6 +12,8 @@ public class MazeCell {
 
 	/** Width of Cell, all Cells are assumed Square */
 	private int size;
+	/** Height of Cell, all Cells are assumed Square */
+	private int cellHeight;
 	/**
 	 * Location Holds the Real World (Minecraft) (X,Z) Coordinates of Each Block inside
 	 * The Y Coord Represents the Start Height of the maze gen
@@ -43,10 +45,14 @@ public class MazeCell {
 	 */
 	private int cellType;
 	
-	public MazeCell(int size){
+	public MazeCell(int size, int cellHeight){
 		this.size = size;
+		this.cellHeight = cellHeight;
 	}
 	public int getSize(){return size;}
+
+	public void setCellHeight(int cellHeight){this.cellHeight = cellHeight;}
+	public int getCellHeight(){return this.cellHeight;}
 
 	public void setCellIndexDirection(CellIndexDirection cellIndexDirection){this.cellIndexDirection = cellIndexDirection;}
 	public CellIndexDirection getCellIndexDirection(){return this.cellIndexDirection;}
