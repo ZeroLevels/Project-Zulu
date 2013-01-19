@@ -67,11 +67,8 @@ public class BlueprintHelper {
 		int distanceFromTop = maxHeight - curHeight;
 		int corectDirecIndex = Math.min(Math.max(directionIndex, minIndex), maxIndex);
 		int lowerdirectionIndex = Math.min(Math.max(directionIndex+1, minIndex), maxIndex);
-		System.out.println("ASP " + directionIndex + " " + corectDirecIndex + " " + lowerdirectionIndex);
-		System.out.println("IOP " + distanceFromTop + " " + maxHeight + " " + curHeight);
 		/* Create "Steps" in the Dome */
 		if(corectDirecIndex/slopeSpacing == distanceFromTop){
-			System.out.println("Placed");
 			if( lowerdirectionIndex/slopeSpacing != corectDirecIndex/slopeSpacing && fillerBlocks.length > 0){
 				return fillerBlocks[0];	
 			}else{
