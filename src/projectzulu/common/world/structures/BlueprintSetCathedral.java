@@ -13,6 +13,7 @@ import projectzulu.common.world.structures.cemetary.BlueprintCathedralDome;
 import projectzulu.common.world.structures.cemetary.BlueprintCathedralEastTower;
 import projectzulu.common.world.structures.cemetary.BlueprintCathedralEntrance;
 import projectzulu.common.world.structures.cemetary.BlueprintCathedralHallway;
+import projectzulu.common.world.structures.cemetary.BlueprintCathedralWestTower;
 
 public class BlueprintSetCathedral implements BlueprintSet {
 	public BlueprintSetCathedral(){
@@ -20,6 +21,7 @@ public class BlueprintSetCathedral implements BlueprintSet {
 		bluePrints.add(new BlueprintCathedralHallway());
 		bluePrints.add(new BlueprintCathedralEntrance());
 		bluePrints.add(new BlueprintCathedralEastTower());
+		bluePrints.add(new BlueprintCathedralWestTower());
 	}
 	
 	@Override
@@ -47,10 +49,10 @@ public class BlueprintSetCathedral implements BlueprintSet {
 		applyBlueprintToCell(cellList, buildCoords, new Point(3,6), Architect.searchListForIdentifer("entrance", bluePrints), CellIndexDirection.SouthEastCorner, buildingSetIndex);
 		
 		int tempCellHeight = cellList[buildCoords.getX()+0][buildCoords.getY()+5].getCellHeight();
-		applyBlueprintToCell(cellList, buildCoords, new Point(0,5), Architect.searchListForIdentifer("east_tower", bluePrints), CellIndexDirection.NorthWestCorner, buildingSetIndex, tempCellHeight*2);
-		applyBlueprintToCell(cellList, buildCoords, new Point(1,5), Architect.searchListForIdentifer("east_tower", bluePrints), CellIndexDirection.NorthEastCorner, buildingSetIndex, tempCellHeight*2);
-		applyBlueprintToCell(cellList, buildCoords, new Point(0,6), Architect.searchListForIdentifer("east_tower", bluePrints), CellIndexDirection.SouthWestCorner, buildingSetIndex, tempCellHeight*2);
-		applyBlueprintToCell(cellList, buildCoords, new Point(1,6), Architect.searchListForIdentifer("east_tower", bluePrints), CellIndexDirection.SouthEastCorner, buildingSetIndex, tempCellHeight*2);
+		applyBlueprintToCell(cellList, buildCoords, new Point(0,5), Architect.searchListForIdentifer("west_tower", bluePrints), CellIndexDirection.NorthWestCorner, buildingSetIndex, tempCellHeight*2);
+		applyBlueprintToCell(cellList, buildCoords, new Point(1,5), Architect.searchListForIdentifer("west_tower", bluePrints), CellIndexDirection.NorthEastCorner, buildingSetIndex, tempCellHeight*2);
+		applyBlueprintToCell(cellList, buildCoords, new Point(0,6), Architect.searchListForIdentifer("west_tower", bluePrints), CellIndexDirection.SouthWestCorner, buildingSetIndex, tempCellHeight*2);
+		applyBlueprintToCell(cellList, buildCoords, new Point(1,6), Architect.searchListForIdentifer("west_tower", bluePrints), CellIndexDirection.SouthEastCorner, buildingSetIndex, tempCellHeight*2);
 		
 		applyBlueprintToCell(cellList, buildCoords, new Point(4,5), Architect.searchListForIdentifer("east_tower", bluePrints), CellIndexDirection.NorthWestCorner, buildingSetIndex, tempCellHeight*2);
 		applyBlueprintToCell(cellList, buildCoords, new Point(5,5), Architect.searchListForIdentifer("east_tower", bluePrints), CellIndexDirection.NorthEastCorner, buildingSetIndex, tempCellHeight*2);

@@ -158,7 +158,7 @@ public enum StructureManager {
 		}
 		@Override
 		public boolean generate(World world, int Xcoord, int Ycoord, int Zcoord, Random random){
-			return (new MazeGenerator(new BuildingManagerCathedral(world), 1, 15, 7, 42, 1, 1)).generate(world, world.rand, Xcoord, Ycoord, Zcoord);
+			return (new MazeGenerator(new BuildingManagerCathedral(world), 1, 19, 7, 42, 1, 1)).generate(world, world.rand, Xcoord, Ycoord, Zcoord);
 		}
 	};
 	

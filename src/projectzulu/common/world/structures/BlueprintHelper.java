@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import net.minecraft.block.Block;
+import projectzulu.common.core.BoundaryPair;
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.CellIndexDirection;
 
@@ -22,7 +23,8 @@ public class BlueprintHelper {
 	 * @return
 	 */
 	@Deprecated
-	public static BlockWithMeta getSlopeBlock(BlockWithMeta placeableBlock, int directionIndex, int slopeSpacing, int curHeight, int maxHeight, int cellIndex, int cellSize, BlockWithMeta...fillerBlocks ){
+	public static BlockWithMeta getSlopeBlock(BlockWithMeta placeableBlock, int directionIndex, int slopeSpacing, int curHeight, int maxHeight, int cellIndex,
+			int cellSize, BlockWithMeta...fillerBlocks ){
 		int distanceFromTop = maxHeight - curHeight;
 		/* Create "Steps" in the Dome */
 		if(directionIndex/slopeSpacing == distanceFromTop){
@@ -55,18 +57,17 @@ public class BlueprintHelper {
 	 * Method used by Blueprints to Create a Slope
 	 * @param directionIndex : integer indicating how far along the slope hte index is
 	 * @param slopeSpacing : Affects the slope of the 'slope', increase decreases steepness, 0 Throw error
+	 * @param indexBoundary : Holds the Min and Max of the directionIndex
 	 * @param curHeight : Height of the Index
-	 * @param floor : The Bottom height For the Slope
 	 * @param maxHeight : Height of the Cell
-	 * @param cellIndex : Index of the Curent Cell
-	 * @param cellSize : Size of The Cell
 	 * @param fillerBlocks : Optional Block Placements. [0] Slope Change in Elevation, [1] Above Slope Filler, [2] Below Slope Filler, 
 	 * @return Block that is Going to be Placed
 	 */
-	public static BlockWithMeta getSlopeBlock(BlockWithMeta placeableBlock, int directionIndex, int minIndex, int maxIndex, int slopeSpacing, int curHeight, int floor, int maxHeight, int cellIndex, int cellSize, BlockWithMeta...fillerBlocks){
+	public static BlockWithMeta getSlopeBlock(BlockWithMeta placeableBlock, int directionIndex, BoundaryPair<Integer, Integer> indexBoundary, int slopeSpacing,
+			int curHeight, int maxHeight, BlockWithMeta...fillerBlocks){
 		int distanceFromTop = maxHeight - curHeight;
-		int corectDirecIndex = Math.min(Math.max(directionIndex, minIndex), maxIndex);
-		int lowerdirectionIndex = Math.min(Math.max(directionIndex+1, minIndex), maxIndex);
+		int corectDirecIndex = Math.min(Math.max(directionIndex, indexBoundary.getLowerLimit()), indexBoundary.getUpperLimit());
+		int lowerdirectionIndex = Math.min(Math.max(directionIndex+1, indexBoundary.getLowerLimit()), indexBoundary.getUpperLimit());
 		/* Create "Steps" in the Dome */
 		if(corectDirecIndex/slopeSpacing == distanceFromTop){
 			if( lowerdirectionIndex/slopeSpacing != corectDirecIndex/slopeSpacing && fillerBlocks.length > 0){
@@ -84,7 +85,6 @@ public class BlueprintHelper {
 		else if(fillerBlocks.length > 2){
 			return fillerBlocks[2];
 		}
-		
 		return null;
 	}
 	
@@ -99,7 +99,8 @@ public class BlueprintHelper {
 	 * @param wallIndex : Index indicating the correct row/column in the Cell is selected for the Wall to Exist on
 	 * @return Block that is Going to be Placed
 	 */
-	public static BlockWithMeta getSolidWallBlock(BlockWithMeta blockToBePlaced, int curHeight, int maxHeight, int cellIndex, int cellSize, CellIndexDirection wallDirection, int... validWallIndex){
+	public static BlockWithMeta getSolidWallBlock(BlockWithMeta blockToBePlaced, int curHeight, int maxHeight, int cellIndex, int cellSize,
+			CellIndexDirection wallDirection, int... validWallIndex){
 		
 		switch (wallDirection) {
 		case NorthWall:

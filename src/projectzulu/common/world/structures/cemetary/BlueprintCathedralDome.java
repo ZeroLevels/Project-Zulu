@@ -4,9 +4,13 @@ import java.util.EnumSet;
 import java.util.Random;
 import java.util.Set;
 
+import com.google.common.base.Optional;
+
 import net.minecraft.block.Block;
 
+import projectzulu.common.core.BoundaryPair;
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.blockdataobjects.Returnable;
 import projectzulu.common.world.cell.CellIndexDirection;
 import projectzulu.common.world.structures.Blueprint;
 import projectzulu.common.world.structures.BlueprintHelper;
@@ -16,22 +20,21 @@ public class BlueprintCathedralDome extends Blueprint{
 	@Override
 	public BlockWithMeta getBlockFromBlueprint(int cellIndex, int cellSize,
 			int curHeight, int maxHeight, int xIndex, int zIndex, Random random, CellIndexDirection cellIndexDirection) {
-		/* Build Dome At Top of Cell */
-		/* Starting From maxHeight-5, we want to Take the Edge Make it air, increase the # of diagonals that air as we rise */
-		int distanceFromTop = maxHeight - curHeight;
-		int gradientDistance = maxHeight - cellSize;
-
+		Returnable<BlockWithMeta> returnableValue = new Returnable<BlockWithMeta>();		
 		switch (cellIndexDirection) {
 		case NorthWestCorner:{
 			int diagonalIndex = cellIndexDirection.getNESWDiagonalIndex(cellIndex, cellSize);
 			if(curHeight > maxHeight - cellSize){
-				BlockWithMeta returnValue = BlueprintHelper.getSlopeBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), cellSize-diagonalIndex-1, 2, curHeight, maxHeight, cellIndex, cellSize, new BlockWithMeta(0));
-				returnValue = returnValue != null ? returnValue : BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0), curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.NorthWall, 0, 2);
-				returnValue = returnValue != null ? returnValue : BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0), curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.WestWall, 0, 2);
-				if(returnValue != null){ return returnValue; }
+				returnableValue.acceptIfEmpty(BlueprintHelper.getSlopeBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), cellSize-diagonalIndex-1, 
+						BoundaryPair.createPair(cellSize-1-3, (cellSize)*2),2,curHeight, maxHeight, new BlockWithMeta(Block.stoneBrick.blockID, 0),
+						new BlockWithMeta(0)));
+				returnableValue.acceptIfEmpty(BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0),
+						curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.NorthWall, 0, 2));
+				returnableValue.acceptIfEmpty(BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0),
+						curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.WestWall, 0, 2));
 			}
-			if(diagonalIndex == -(cellSize-2)){
-				return new BlockWithMeta(Block.stoneBrick.blockID, 0);
+			if( diagonalIndex == -(cellSize-2) ){
+				returnableValue.acceptIfEmpty(new BlockWithMeta(Block.stoneBrick.blockID, 0));
 			}
 			break;
 
@@ -39,46 +42,55 @@ public class BlueprintCathedralDome extends Blueprint{
 		case SouthEastCorner:{
 			int diagonalIndex = cellIndexDirection.getNESWDiagonalIndex(cellIndex, cellSize);
 			if(curHeight > maxHeight - cellSize){
-				BlockWithMeta tempReturn = BlueprintHelper.getSlopeBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), cellSize+diagonalIndex-1, 2, curHeight, maxHeight, cellIndex, cellSize, new BlockWithMeta(0));
-				tempReturn = tempReturn != null ? tempReturn : BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0), curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.NorthWall, cellSize-1, 2);
-				tempReturn = tempReturn != null ? tempReturn : BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0), curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.WestWall, cellSize-1, 2);
-				if(tempReturn != null){	return tempReturn; }
+				returnableValue.acceptIfEmpty(BlueprintHelper.getSlopeBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), cellSize+diagonalIndex-1, 
+						BoundaryPair.createPair(cellSize-1-3, (cellSize)*2),2,curHeight, maxHeight, new BlockWithMeta(Block.stoneBrick.blockID, 0),
+						new BlockWithMeta(0)));
+				returnableValue.acceptIfEmpty(BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0),
+						curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.NorthWall, cellSize-1, 2));
+				returnableValue.acceptIfEmpty(BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0),
+						curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.WestWall, cellSize-1, 2));
 			}
 			if(diagonalIndex == cellSize-2){
-				return new BlockWithMeta(Block.stoneBrick.blockID, 0);
+				returnableValue.acceptIfEmpty(new BlockWithMeta(Block.stoneBrick.blockID, 0));
 			}
 			break;	
 		}
 		case NorthEastCorner:{
 			int diagonalIndex = cellIndexDirection.getSENWDiagonalIndex(cellIndex, cellSize);
 			if(curHeight > maxHeight - cellSize){
-				BlockWithMeta tempReturn = BlueprintHelper.getSlopeBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), cellSize+diagonalIndex-1, 2, curHeight, maxHeight, cellIndex, cellSize, new BlockWithMeta(0));
-				tempReturn = tempReturn != null ? tempReturn : BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0), curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.NorthWall, cellSize-1, 2);
-				tempReturn = tempReturn != null ? tempReturn : BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0), curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.WestWall, 0, 2);
-				if(tempReturn != null){	return tempReturn; }
+				returnableValue.acceptIfEmpty(BlueprintHelper.getSlopeBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), cellSize+diagonalIndex-1, 
+						BoundaryPair.createPair(cellSize-1-3, (cellSize)*2),2,curHeight, maxHeight, new BlockWithMeta(Block.stoneBrick.blockID, 0),
+						new BlockWithMeta(0)));
+				returnableValue.acceptIfEmpty(BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0),
+						curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.NorthWall, cellSize-1, 2));
+				returnableValue.acceptIfEmpty(BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0),
+						curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.WestWall, 0, 2));
 			}
 			if(diagonalIndex == cellSize-2){
-				return new BlockWithMeta(Block.stoneBrick.blockID, 0);
+				returnableValue.acceptIfEmpty(new BlockWithMeta(Block.stoneBrick.blockID, 0));
 			}
 			break;
 		}
 		case SouthWestCorner:{
 			int diagonalIndex = CellIndexDirection.getSENWDiagonalIndex(cellIndex, cellSize);
 			if(curHeight > maxHeight - cellSize){
-				BlockWithMeta tempReturn = BlueprintHelper.getSlopeBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), cellSize-diagonalIndex-1, 2, curHeight, maxHeight, cellIndex, cellSize, new BlockWithMeta(0));
-				tempReturn = tempReturn != null ? tempReturn : BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0), curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.NorthWall, 0, 2);
-				tempReturn = tempReturn != null ? tempReturn : BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0), curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.WestWall, cellSize-1, 2);
-				if(tempReturn != null){	return tempReturn; }
+				returnableValue.acceptIfEmpty(BlueprintHelper.getSlopeBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), cellSize-diagonalIndex-1, 
+						BoundaryPair.createPair(cellSize-1-3, (cellSize)*2),2,curHeight, maxHeight, new BlockWithMeta(Block.stoneBrick.blockID, 0),
+						new BlockWithMeta(0)));
+				returnableValue.acceptIfEmpty(BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0),
+						curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.NorthWall, 0, 2));
+				returnableValue.acceptIfEmpty(BlueprintHelper.getVerticalSlotWallBlock(new BlockWithMeta(Block.stoneBrick.blockID, 0), new BlockWithMeta(0),
+						curHeight, maxHeight, cellIndex, cellSize, CellIndexDirection.WestWall, cellSize-1, 2));
 			}
 			if(diagonalIndex == -(cellSize-2)){
-				return new BlockWithMeta(Block.stoneBrick.blockID, 0);
+				returnableValue.acceptIfEmpty(new BlockWithMeta(Block.stoneBrick.blockID, 0));
 			}
 			break;	
 		}
 		default:
 			break;
 		}
-		return new BlockWithMeta(0);
+		return returnableValue.isReturnablePresent() ? returnableValue.getReturnableObject() : new BlockWithMeta(0);
 	}
 
 	private BlockWithMeta buildDome(int diagonalIndex, int curHeight, int maxHeight, int cellIndex, int cellSize, EnumSet<CellIndexDirection> validWalls){
