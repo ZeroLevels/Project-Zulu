@@ -1,0 +1,38 @@
+package projectzulu.common.world.structures.labyrinth;
+
+import java.util.Random;
+
+import net.minecraft.block.Block;
+<<<<<<< HEAD:src/projectzulu/common/world/structures/labyrinth/BlueprintLabyrinthRandomWall.java
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
+import projectzulu.common.world.structures.Blueprint;
+=======
+import projectzulu.common.world.CellIndexDirection;
+import projectzulu.common.world.dataobjects.BlockWithMeta;
+>>>>>>> master:src/projectzulu/common/world/blueprints/BlueprintLabyrinthRandomWall.java
+
+public class BlueprintLabyrinthRandomWall extends Blueprint{
+
+	@Override
+	public BlockWithMeta getBlockFromBlueprint(int cellIndex, int cellSize,
+			int curHeight, int maxHeight, int xIndex, int zIndex,
+			Random random, CellIndexDirection cellIndexDirection) {
+		
+		if(10 - random.nextInt(100) >= 0){
+			return new BlockWithMeta(Block.stoneBrick.blockID, 2);
+		}else if(10 - random.nextInt(100) >= 0){
+			return new BlockWithMeta(Block.stoneBrick.blockID, 1);
+		}else if (5 - random.nextInt(100) >= 0){
+			return new BlockWithMeta(0);
+		}else{
+			return new BlockWithMeta(Block.stoneBrick.blockID, 0);
+		}
+		
+	}
+	
+	@Override
+	public int getWeight() {
+		return 4;
+	}
+}

@@ -1,13 +1,13 @@
-package projectzulu.common.world.structures.cemetary;
+package projectzulu.common.world.blueprints;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityChest;
-import projectzulu.common.world.blockdataobjects.BlockWithMeta;
-import projectzulu.common.world.blockdataobjects.ChestWithMeta;
-import projectzulu.common.world.cell.CellIndexDirection;
-import projectzulu.common.world.structures.Blueprint;
+import projectzulu.common.world.CellIndexDirection;
+import projectzulu.common.world.dataobjects.BlockWithMeta;
+import projectzulu.common.world.dataobjects.ChestWithMeta;
+
 
 public class BlueprintCemeteryTomb extends Blueprint{
 

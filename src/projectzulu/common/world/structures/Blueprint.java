@@ -3,7 +3,7 @@ package projectzulu.common.world.structures;
 import java.util.Random;
 
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
-import projectzulu.common.world.cell.CellIndexDirection;
+import projectzulu.common.world.dataobjects.BlockWithMeta;
 
 public abstract class Blueprint {
 	

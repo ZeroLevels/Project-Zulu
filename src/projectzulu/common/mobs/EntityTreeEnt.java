@@ -12,8 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import projectzulu.common.api.BlockList;
 import projectzulu.common.api.CustomEntityList;
-import projectzulu.common.api.ItemBlockList;
 import projectzulu.common.core.DefaultProps;
 import projectzulu.common.core.ProjectZuluLog;
 import projectzulu.common.mobs.entityai.EntityAIAttackOnCollide;
@@ -33,15 +33,15 @@ public class EntityTreeEnt extends EntityGenericAnimal implements IAnimals{
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, this.moveSpeed));
-
+		
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, this.moveSpeed, false));
 //		this.tasks.addTask(4, new EntityAIFollowOwner(this, this.moveSpeed,	10.0F, 2.0F));
-
+		
 //		this.tasks.addTask(5, new EntityAIMate(this, this.moveSpeed));
 //		this.tasks.addTask(6, new EntityAITempt(this, this.moveSpeed, Block.tallGrass.blockID, false));
 //		this.tasks.addTask(7, new EntityAIFollowParent(this, this.moveSpeed));
 		this.tasks.addTask(9, new EntityAIWander(this, this.moveSpeed, 120));
-
+		
 		this.targetTasks.addTask(3,	new EntityAIHurtByTarget(this, false, false));
 		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget(this, EnumSet.of(EntityStates.attacking, EntityStates.looking), EntityPlayer.class, 16.0F, 0, true));
 		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget(this, EnumSet.of(EntityStates.attacking, EntityStates.looking), EntityLiving.class, 16.0F, 0, false, true, IMob.mobSelector));
@@ -153,8 +153,8 @@ public class EntityTreeEnt extends EntityGenericAnimal implements IAnimals{
 
 	@Override
 	protected void dropRareDrop(int par1) {
-		if(Loader.isModLoaded(DefaultProps.BlocksModId) && ItemBlockList.mobHeads.isPresent()){
-			entityDropItem(new ItemStack(ItemBlockList.mobHeads.get().blockID,1,15), 1);
+		if(Loader.isModLoaded(DefaultProps.BlocksModId) && BlockList.mobHeads.isPresent()){
+			entityDropItem(new ItemStack(BlockList.mobHeads.get().blockID,1,15), 1);
 		}
 		super.dropRareDrop(par1);
 	}

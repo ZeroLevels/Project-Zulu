@@ -9,8 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import projectzulu.common.api.BlockList;
 import projectzulu.common.api.CustomEntityList;
-import projectzulu.common.api.ItemBlockList;
 import projectzulu.common.core.DefaultProps;
 import projectzulu.common.core.ProjectZuluLog;
 import projectzulu.common.mobs.entityai.EntityAIAttackOnCollide;
@@ -153,7 +153,7 @@ public class EntityElephant extends EntityGenericAnimal{
 	protected void dropFewItems(boolean par1, int par2){
 		int var3 = rand.nextInt(4 + par2);
 		for (int i = 0; i < var3; i++) {
-			ItemStack loot = CustomEntityList.beaver.get().getLootItem(rand);
+			ItemStack loot = CustomEntityList.elephant.get().getLootItem(rand);
 			if(loot != null){
 				entityDropItem(loot, 1);
 			}
@@ -162,8 +162,8 @@ public class EntityElephant extends EntityGenericAnimal{
 
 	@Override
 	protected void dropRareDrop(int par1) {
-		if(Loader.isModLoaded(DefaultProps.BlocksModId) && ItemBlockList.mobHeads.isPresent()){
-			entityDropItem(new ItemStack(ItemBlockList.mobHeads.get().blockID,1,17), 1);
+		if(Loader.isModLoaded(DefaultProps.BlocksModId) && BlockList.mobHeads.isPresent()){
+			entityDropItem(new ItemStack(BlockList.mobHeads.get().blockID,1,17), 1);
 		}
 		super.dropRareDrop(par1);
 	}

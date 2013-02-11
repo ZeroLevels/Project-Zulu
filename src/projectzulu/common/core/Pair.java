@@ -28,5 +28,4 @@ public class Pair<K, V> {
     public V getElement1() {
         return element1;
     }
-
 }

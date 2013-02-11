@@ -1,20 +1,20 @@
 package projectzulu.common;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
+import projectzulu.common.core.CreativeTab;
 import projectzulu.common.core.DefaultProps;
 import projectzulu.common.core.EventHookContainerClass;
 import projectzulu.common.core.ProjectZuluLog;
 import projectzulu.common.core.WorldGeneratorZulu;
+import projectzulu.common.core.ZuluGuiHandler;
 import projectzulu.common.core.ZuluPacketHandler;
-import projectzulu.common.temperature.TemperatureTicker;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -25,43 +25,25 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /*Useful OpenSource reference to Look at: Gaurdsman*/
-@Mod(modid = DefaultProps.CoreModId, name = "Project Zulu Core", version = DefaultProps.VERSION_STRING)
+@Mod(modid = DefaultProps.CoreModId, name = "Project Zulu Core", version = DefaultProps.VERSION_STRING, dependencies = DefaultProps.DesiredBefore)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels={"Channel_Zulu"}, packetHandler = ZuluPacketHandler.class)
 
-public class ProjectZulu_Core{	
+public class ProjectZulu_Core{
 	
 	@Instance(DefaultProps.CoreModId)
 	public static ProjectZulu_Core modInstance;
-	
-	/*
-	 * General Declarations
-	 */
-	public static ArrayList<ItemStack> tier1DesertArmor = new ArrayList<ItemStack>();
-	public static ArrayList<ItemStack> tier2DesertArmor = new ArrayList<ItemStack>();
-	public static ArrayList<ItemStack> tier3DesertArmor = new ArrayList<ItemStack>();
-	public static ArrayList<ItemStack> tier4DesertArmor = new ArrayList<ItemStack>();
-	public static ArrayList<ItemStack> tier5DesertArmor = new ArrayList<ItemStack>();
-	
-	public static int scaleIndex;
-	public static int whiteWoolIndex;
-	public static int redWoolIndex;
-	public static int greenWoolIndex;
-	public static int blueWoolIndex;
-	public static int goldScaleIndex;
-	public static int ironScaleIndex;
-	public static int diamondScaleIndex;
-	public static int cactusIndex;
-	public static int furIndex;
-	
+	public static final CreativeTabs projectZuluCreativeTab = new CreativeTab(CreativeTabs.creativeTabArray.length, "projectZuluTab");
+
 	public static boolean enableTestBlock = false ; 
 	public static boolean enableTemperature = false; 
 	public static boolean tombstoneOnDeath = true; 
 	public static boolean replaceFlowerPot = true;
-	
+
 	public static int spikeRenderID = -1;
 	public static int campFireRenderID = -1;
 	public static int universalFlowerPotRenderID = -1;
@@ -70,10 +52,7 @@ public class ProjectZulu_Core{
 	public static boolean despawnInPeaceful = true; 
 	public static float namePlateScale = 0.016666668F * 1.6f * 0.5f; 
 	public static float namePlateOpacity = 0.85F; 
-
 	
-	
-	TemperatureTicker temperatureTicker;
 	public static int testBlockID = 2540;
 	public static Block testBlock;
 	
@@ -117,7 +96,7 @@ public class ProjectZulu_Core{
         
         /* Should Enable Temperature System ? */
 //        if(enableTemperature){
-//            temperatureTicker = proxy.initializeTempTicker();
+//            TemperatureTicker temperatureTicker = proxy.initializeTempTicker();
 //            GameRegistry.registerPlayerTracker(temperatureTicker);
 //        }
 		proxy.bossHealthTicker();
@@ -127,12 +106,12 @@ public class ProjectZulu_Core{
 	@Init
 	public void load(FMLInitializationEvent event){
 		proxy.registerRenderThings();
-		proxy.clientEventHooks();
 		
 		if(enableTestBlock){
 			testBlock = (new BlockTestBlock(testBlockID, 32)).setHardness(1.0f).setResistance(1.0f).setBlockName("testBlock");
 			GameRegistry.registerBlock(testBlock, "testZuluBlock"); LanguageRegistry.addName(testBlock, "Test block");
 		}
+        NetworkRegistry.instance().registerGuiHandler(ProjectZulu_Core.modInstance, new ZuluGuiHandler());
 	}
 	
 	@PostInit

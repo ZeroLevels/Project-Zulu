@@ -1,0 +1,28 @@
+package projectzulu.common.world.structures;
+
+import java.util.Random;
+
+<<<<<<< HEAD:src/projectzulu/common/world/structures/Blueprint.java
+import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.cell.CellIndexDirection;
+=======
+import projectzulu.common.world.CellIndexDirection;
+import projectzulu.common.world.dataobjects.BlockWithMeta;
+>>>>>>> master:src/projectzulu/common/world/blueprints/Blueprint.java
+
+public abstract class Blueprint {
+	
+	public abstract BlockWithMeta getBlockFromBlueprint(int cellIndex, int cellSize, int curHeight, int maxHeight, int xIndex, int zIndex, Random random, CellIndexDirection cellIndexDirection);	
+	
+	public int getWeight(){
+		return 1;
+	}
+	
+	/**
+	 * Used to Search Architect list for a specific Building Type
+	 * Should be All lowercase
+	 */
+	public String getIdentifier(){
+		return "generic";
+	}
+}

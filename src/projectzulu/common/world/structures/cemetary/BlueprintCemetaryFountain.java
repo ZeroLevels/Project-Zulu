@@ -3,7 +3,7 @@ package projectzulu.common.world.structures.cemetary;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.dataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.CellIndexDirection;
 import projectzulu.common.world.structures.Blueprint;
 

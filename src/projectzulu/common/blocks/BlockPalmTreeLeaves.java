@@ -14,8 +14,9 @@ import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-import projectzulu.common.ProjectZulu_Blocks;
-import projectzulu.common.api.ItemBlockList;
+import projectzulu.common.ProjectZulu_Core;
+import projectzulu.common.api.BlockList;
+import projectzulu.common.api.ItemList;
 import projectzulu.common.core.DefaultProps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -36,7 +37,7 @@ public class BlockPalmTreeLeaves extends BlockLeavesBase implements IShearable
         super(par1, par2, Material.leaves, false);
         this.baseIndexInPNG = par2;
         this.setTickRandomly(true);
-        this.setCreativeTab(ProjectZulu_Blocks.projectZuluCreativeTab);
+        this.setCreativeTab(ProjectZulu_Core.projectZuluCreativeTab);
         this.setRequiresSelfNotify();
     }
     
@@ -271,8 +272,8 @@ public class BlockPalmTreeLeaves extends BlockLeavesBase implements IShearable
      */
     public int idDropped(int par1, Random par2Random, int par3)
     {
-    	if(ItemBlockList.palmTreeSapling.isPresent()){
-            return ItemBlockList.palmTreeSapling.get().blockID;
+    	if(BlockList.palmTreeSapling.isPresent()){
+            return BlockList.palmTreeSapling.get().blockID;
     	}else{
     		return 0;
     	}
@@ -304,14 +305,14 @@ public class BlockPalmTreeLeaves extends BlockLeavesBase implements IShearable
     	ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
     	
     	if(10-holdRand >=0){
-    		if(ItemBlockList.coconutItem.isPresent()){
-        		ret.add(new ItemStack(ItemBlockList.coconutItem.get()));
+    		if(ItemList.coconutItem.isPresent()){
+        		ret.add(new ItemStack(ItemList.coconutItem.get()));
     		}
     		return ret;
     	}
     	if(30-holdRand >=0){
-    		if(ItemBlockList.palmTreeSapling.isPresent()){
-        		ret.add(new ItemStack(ItemBlockList.palmTreeSapling.get()));
+    		if(BlockList.palmTreeSapling.isPresent()){
+        		ret.add(new ItemStack(BlockList.palmTreeSapling.get()));
         		return ret;
     		}
     	}

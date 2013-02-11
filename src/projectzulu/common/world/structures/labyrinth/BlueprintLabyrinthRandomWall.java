@@ -1,11 +1,10 @@
-package projectzulu.common.world.structures.labyrinth;
+package projectzulu.common.world.blueprints;
 
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import projectzulu.common.world.blockdataobjects.BlockWithMeta;
-import projectzulu.common.world.cell.CellIndexDirection;
-import projectzulu.common.world.structures.Blueprint;
+import projectzulu.common.world.CellIndexDirection;
+import projectzulu.common.world.dataobjects.BlockWithMeta;
 
 public class BlueprintLabyrinthRandomWall extends Blueprint{
 

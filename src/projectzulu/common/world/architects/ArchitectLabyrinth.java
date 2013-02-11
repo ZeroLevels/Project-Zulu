@@ -8,7 +8,7 @@ import projectzulu.common.world.blockdataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.CellIndexDirection;
 import projectzulu.common.world.structures.labyrinth.BlueprintDeadEndChest;
 import projectzulu.common.world.structures.labyrinth.BlueprintLabyrinthCobweb;
-import projectzulu.common.world.structures.labyrinth.BlueprintLabyrinthHiddenWall;
+import projectzulu.common.world.dataobjects.BlockWithMeta;
 import projectzulu.common.world.structures.labyrinth.BlueprintLabyrinthRandomWall;
 
 public class ArchitectLabyrinth extends Architect{
@@ -47,8 +47,5 @@ public class ArchitectLabyrinth extends Architect{
 	public BlockWithMeta getBlueprintSetBlock(Point cellCoord, CellIndexDirection cellIndexDirection, 
 			int bluePrintIndex,	int buildingIndex, int cellIndex, int cellSize, int curHeight, int maxHeight, Random random) {
 		return null;
-	}
-	
-	
-	
+	}	
 }

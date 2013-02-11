@@ -8,7 +8,7 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import projectzulu.common.world.architects.Architect;
-import projectzulu.common.world.blockdataobjects.BlockWithMeta;
+import projectzulu.common.world.dataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.MazeCell;
 
 public abstract class BuildingManager {

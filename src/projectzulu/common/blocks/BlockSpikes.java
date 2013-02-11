@@ -14,9 +14,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import projectzulu.common.ProjectZulu_Blocks;
 import projectzulu.common.ProjectZulu_Core;
-import projectzulu.common.api.ItemBlockList;
+import projectzulu.common.api.ItemList;
 import projectzulu.common.core.DefaultProps;
 import projectzulu.common.core.ItemGenerics;
 import cpw.mods.fml.relauncher.Side;
@@ -26,7 +25,7 @@ public class BlockSpikes extends Block{
 
 	public BlockSpikes(int i){
 		super(i, Material.iron);
-        this.setCreativeTab(ProjectZulu_Blocks.projectZuluCreativeTab);
+        this.setCreativeTab(ProjectZulu_Core.projectZuluCreativeTab);
 		this.disableStats();
 		this.setRequiresSelfNotify();
         this.setBlockBounds(0f, 0.0F, 0.0f, 1.0f, 0.5f, 1.0f);
@@ -191,7 +190,7 @@ public class BlockSpikes extends Block{
 			float par8, float par9) {
 
 		/* Check if Item is Poison Droplet, is so Make Poisonous */
-		if( par5EntityPlayer.inventory.getCurrentItem() != null && ItemBlockList.genericCraftingItems1.isPresent() && par5EntityPlayer.inventory.getCurrentItem().getItem().itemID == ItemBlockList.genericCraftingItems1.get().itemID
+		if( par5EntityPlayer.inventory.getCurrentItem() != null && ItemList.genericCraftingItems1.isPresent() && par5EntityPlayer.inventory.getCurrentItem().getItem().itemID == ItemList.genericCraftingItems1.get().itemID
 				&& par5EntityPlayer.inventory.getCurrentItem().getItemDamage() == ItemGenerics.Properties.PoisonDroplet.meta() 
 				&& ( par1World.getBlockMetadata(par2, par3, par4) < 6 || par1World.getBlockMetadata(par2, par3, par4) > 11 ) ){
 			

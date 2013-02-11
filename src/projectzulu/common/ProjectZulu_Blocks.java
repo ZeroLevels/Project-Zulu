@@ -1,25 +1,27 @@
 package projectzulu.common;
 
+import static net.minecraftforge.common.ChestGenHooks.DUNGEON_CHEST;
+
 import java.io.File;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.GameRules;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.common.MinecraftForge;
-import projectzulu.common.api.ItemBlockList;
+import projectzulu.common.api.BlockList;
+import projectzulu.common.api.ItemList;
 import projectzulu.common.blocks.ArmorManager;
 import projectzulu.common.blocks.ItemBlockManager;
 import projectzulu.common.blocks.ItemBlockRecipeManager;
 import projectzulu.common.blocks.RenderCampFire;
 import projectzulu.common.blocks.RenderSpike;
 import projectzulu.common.blocks.RenderUniversalFlowerPot;
-import projectzulu.common.blocks.ZuluGuiHandler;
-import projectzulu.common.core.CreativeTab;
 import projectzulu.common.core.DefaultProps;
 import projectzulu.common.core.ItemGenerics;
 import projectzulu.common.core.ProjectZuluLog;
+import projectzulu.common.core.ZuluGuiHandler;
 import projectzulu.common.potion.EventHandleNullPotions;
 import projectzulu.common.potion.PotionManager;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -45,7 +47,6 @@ public class ProjectZulu_Blocks {
 	public static int getNextDefaultBlockID(){ return defaultBlockID++; }
 	private static int defaultItemID = 9000;
 	public static int getNextDefaultItemID(){ return defaultItemID++; }
-	public static final CreativeTabs projectZuluCreativeTab = new CreativeTab(CreativeTabs.creativeTabArray.length, "projectZuluTab");
 
 	/*Armor Indexes*/
 	public static int scaleIndex;
@@ -107,27 +108,25 @@ public class ProjectZulu_Blocks {
 		}
 		ProjectZuluLog.info("Finished ItemBlock Setup ");
 
-		if(ItemBlockList.spike.isPresent()){
+		if(BlockList.spike.isPresent()){
 			ProjectZulu_Core.spikeRenderID = ProjectZulu_Core.spikeRenderID == -1 ? RenderingRegistry.getNextAvailableRenderId() : ProjectZulu_Core.spikeRenderID;
 			RenderingRegistry.registerBlockHandler(ProjectZulu_Core.spikeRenderID, new RenderSpike() );
 			ProjectZuluLog.info("Spike Render ID Registed to %s", ProjectZulu_Core.spikeRenderID);
 		}
 		
-		if(ItemBlockList.campfire.isPresent()){
+		if(BlockList.campfire.isPresent()){
 			ProjectZulu_Core.campFireRenderID = ProjectZulu_Core.campFireRenderID == -1 ? RenderingRegistry.getNextAvailableRenderId() : ProjectZulu_Core.campFireRenderID;
 			RenderingRegistry.registerBlockHandler(ProjectZulu_Core.campFireRenderID, new RenderCampFire() );
 			ProjectZuluLog.info("Campfire Render ID Registed to %s", ProjectZulu_Core.campFireRenderID);
 		}
 		
-		if(ItemBlockList.universalFlowerPot.isPresent()){
+		if(BlockList.universalFlowerPot.isPresent()){
 			ProjectZulu_Core.universalFlowerPotRenderID = ProjectZulu_Core.universalFlowerPotRenderID == -1 ? RenderingRegistry.getNextAvailableRenderId() : ProjectZulu_Core.universalFlowerPotRenderID;
 			RenderingRegistry.registerBlockHandler(ProjectZulu_Core.universalFlowerPotRenderID, new RenderUniversalFlowerPot() );
 			ProjectZuluLog.info("Universal Flower Pot Render ID Registed to %s", ProjectZulu_Core.universalFlowerPotRenderID);
 		}
 
 		ProjectZulu_Core.proxy.registerBlockRenders();
-        NetworkRegistry.instance().registerGuiHandler(ProjectZulu_Core.modInstance, new ZuluGuiHandler());
-        
 		/* War Axe Declaration */
 //		TickRegistry.registerScheduledTickHandler(new RenderCustomArmorTicker(), Side.CLIENT);
 //		goldScaleIndex = mod_ProjectZulu.proxy.addArmor("Armor Sets/goldscale");
@@ -138,8 +137,9 @@ public class ProjectZulu_Blocks {
 	
 	@PostInit
 	public void postInit(FMLPostInitializationEvent event){
-		if(ItemBlockList.genericCraftingItems1.isPresent()){
-			DungeonHooks.addDungeonLoot(new ItemStack(ItemBlockList.genericCraftingItems1.get(), 1, ItemGenerics.Properties.ShinyBauble.meta()), 50, 3, 8);
+		if(ItemList.genericCraftingItems1.isPresent()){
+			ChestGenHooks.getInfo(DUNGEON_CHEST).addItem(new WeightedRandomChestContent(
+					new ItemStack(ItemList.genericCraftingItems1.get(), 1, ItemGenerics.Properties.ShinyBauble.meta()), 3, 8, 50));			
 		}
 			
 		ItemBlockRecipeManager.setupBlockModuleRecipies();

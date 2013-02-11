@@ -1,6 +1,3 @@
-package projectzulu.common.world.architects;
-
-import java.util.Random;
 
 import org.lwjgl.util.Point;
 
@@ -13,7 +10,6 @@ import projectzulu.common.world.structures.cemetary.BlueprintCemeteryTomb2;
 import projectzulu.common.world.structures.labyrinth.BlueprintScatteredTombstonesAndFlowers;
 
 public class ArchitectCemetary extends Architect{
-	
 
 	public ArchitectCemetary(){
 		unCarvedBlueprintList.add(new BlueprintScatteredTombstonesAndFlowers());
@@ -36,13 +32,4 @@ public class ArchitectCemetary extends Architect{
 			int buildingIndex) {
 		return unCarvedBlueprintList.get(unCarvedState).getBlockFromBlueprint(cellIndex, cellSize, curHeight, maxHeight, xIndex, zIndex, random, cellIndexDirection);
 	}
-
-	@Override
-	public BlockWithMeta getBlueprintSetBlock(Point cellCoord, CellIndexDirection cellIndexDirection, 
-			int bluePrintIndex, int buildingIndex, int cellIndex, int cellSize, int curHeight,int maxHeight, Random random) {
-		return null;
-	}
-
-
-
 }

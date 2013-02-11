@@ -1,21 +1,17 @@
 package projectzulu.common.core;
 
+import java.net.URL;
+
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.event.ForgeSubscribe;
-
-//Ripped from EE3 on Github, god bless them.
 
 public class SoundHandlerClass{
 
     @ForgeSubscribe
 	public void onLoadSoundSettings(SoundLoadEvent soundLoadEvent) {
-		for (String soundFile : Sounds.soundFiles) {
-			try {
-				soundLoadEvent.manager.soundPoolSounds.addSound("sounds/" + soundFile, this.getClass().getResource(Sounds.SOUND_RESOURCE_LOCATION + soundFile));
-				
-            }catch (Exception e) {
-            	ProjectZuluLog.warning("Failed loading sound file: " + soundFile);
-            }
+    	ProjectZuluLog.info("Registering Sounds");
+    	for (PairDirectoryFile<URL, String> sounds : Sounds.getSounds()) {
+    		soundLoadEvent.manager.soundPoolSounds.addSound("sounds/" + sounds.getFile(), sounds.getDirectory());
 		}
 	}
 }

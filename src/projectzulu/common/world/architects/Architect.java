@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.lwjgl.util.Point;
-
+import projectzulu.common.world.BlockDataObjects.BlockWithMeta;
 import projectzulu.common.world.blockdataobjects.BlockWithMeta;
 import projectzulu.common.world.cell.CellIndexDirection;
 import projectzulu.common.world.structures.Blueprint;

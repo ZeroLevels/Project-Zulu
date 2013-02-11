@@ -8,8 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import projectzulu.common.ProjectZulu_Blocks;
-import projectzulu.common.api.ItemBlockList;
+import projectzulu.common.ProjectZulu_Core;
+import projectzulu.common.api.BlockList;
 import projectzulu.common.core.DefaultProps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,7 +22,7 @@ public class BlockPalmTreeSapling extends BlockFlower{
         super(par1, par2);
         float var3 = 0.4F;
         this.setBlockBounds(0.5F - var3, 0.0F, 0.5F - var3, 0.5F + var3, var3 * 2.0F, 0.5F + var3);
-        this.setCreativeTab(ProjectZulu_Blocks.projectZuluCreativeTab);
+        this.setCreativeTab(ProjectZulu_Core.projectZuluCreativeTab);
     }
 
     /**
@@ -58,8 +58,8 @@ public class BlockPalmTreeSapling extends BlockFlower{
      * Attempts to grow a sapling into a tree
      */
     public void growTree(World par1World, int par2, int par3, int par4, Random par5Random){
-    	if(!par1World.isRemote && ItemBlockList.palmTreeLeaves.isPresent() && ItemBlockList.palmTreeLog.isPresent()){
-    		int palmTreeLogID = ItemBlockList.palmTreeLog.get().blockID;
+    	if(!par1World.isRemote && BlockList.palmTreeLeaves.isPresent() && BlockList.palmTreeLog.isPresent()){
+    		int palmTreeLogID = BlockList.palmTreeLog.get().blockID;
 
     		int height = par5Random.nextInt(3)+4;
 
@@ -150,7 +150,7 @@ public class BlockPalmTreeSapling extends BlockFlower{
     }
     
     public void spawnLeaves(World par1World, int par2, int par3, int par4, Random par5Random, int height){
-		int palmTreeLeavesID = ItemBlockList.palmTreeLeaves.get().blockID;
+		int palmTreeLeavesID = BlockList.palmTreeLeaves.get().blockID;
 
     	//TODO: Add more Leave Spawn Templates
     	if (height + 1 >= 7 ) {
